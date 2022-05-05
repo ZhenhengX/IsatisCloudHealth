@@ -1,0 +1,49 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: Service
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/health?serverTimezone=UTC
+      username: root
+      password: root
+  cloud:
+    nacos:
+      discovery:
+        username: nacos
+        password: nacos
+        server-addr: 127.0.0.1:8848
+        namespace: 056fac36-f20b-4863-9820-71d3deac550a
+  devtools:
+    restart:
+      # 设置开启热部署
+      enabled: true
+      # 启用热部署的目录
+      additional-paths: src/main/java
+      # 排除的目录及文件
+      exclude: WEB-INF/**
+mybatis-plus:
+  global-config:
+    db-config:
+      table-prefix: t_
+      id-type: auto
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+logging:
+  level:
+    com.xzh: debug
+feign:
+  client:
+    config:
+      default:
+        loggerlevel: BASIC
+  # feign性能优化，开启httpclient连接池
+  httpclient:
+    enabled: true
+    max-connections: 200
+    max-connections-per-route: 50
+
+

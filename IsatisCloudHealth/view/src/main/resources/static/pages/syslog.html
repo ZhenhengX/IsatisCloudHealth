@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <title>菘蓝云健康</title>
+    <meta content="菘蓝云健康" name="description">
+    <meta content="菘蓝云健康" name="keywords">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <!-- 引入样式 -->
+    <link href="../plugins/elementui/index.css" rel="stylesheet">
+    <link href="../plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+<body class="hold-transition">
+<div id="app">
+    <div class="content-header">
+        <h1>系统日志
+            <small>系统日志管理</small>
+        </h1>
+        <el-breadcrumb class="breadcrumb" separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>预约管理</el-breadcrumb-item>
+            <el-breadcrumb-item>系统日志</el-breadcrumb-item>
+        </el-breadcrumb>
+    </div>
+    <div class="app-container">
+        <div class="box">
+            <div class="filter-container">
+                <div style="margin-top: 20px">
+                   <span>
+                    <el-button type="danger" @click="delArray()">批量删除</el-button>
+                    <el-button @click="toggleSelection()">取消所有</el-button>
+                </span>
+                </div>
+
+            </div>
+            <el-table ref="multipleTable" :data="dataList" current-row-key="id"
+                      highlight-current-row
+                      size="small"
+                      stripe @selection-change="handleSelectionChange">
+                <el-table-column type="selection" width="55"></el-table-column>
+                <el-table-column align="center" label="服务器" prop="consumerName"></el-table-column>
+                <el-table-column align="center" label="用户名称" prop="username"></el-table-column>
+                <el-table-column align="center" label="ip" prop="ip"></el-table-column>
+                <el-table-column align="center" label="路径名" prop="url"></el-table-column>
+                <el-table-column align="center" label="执行时间/ms" prop="executionTime"></el-table-column>
+                <el-table-column align="center" label="方法" prop="method"></el-table-column>
+                <el-table-column align="center" label="访问时间" prop="visitTime"></el-table-column>
+                </el-table-column>
+            </el-table>
+
+            <div class="pagination-container">
+                <el-pagination
+                        :current-page="pagination.currentPage"
+                        :page-size="pagination.pageSize"
+                        :total="pagination.total"
+                        class="pagiantion"
+                        layout="total, prev, pager, next, jumper"
+                        @current-change="handleCurrentChange">
+                </el-pagination>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<!-- 引入组件库 -->
+<script src="../js/vue.js"></script>
+<script src="../plugins/elementui/index.js"></script>
+<script src="../js/jquery.min.js" type="text/javascript"></script>
+<script src="../js/axios-0.18.0.js"></script>
+
+<script>
+    var vue = new Vue({
+        el: '#app',
+        data: {
+            pagination: {//分页相关模型数据
+                currentPage: 1,//当前页码
+                pageSize: 20,//每页显示的记录数
+                total: 0,//总记录数
+                queryString: null//查询条件
+            },
+            dataList: [{
+                id: 1, consumerName: 110,
+                username: 120, ip: 159,
+                url: 123, executionTime: 110,
+                method: "123", visitTime: 2020 - 9 - 3
+
+            }],//当前页要展示的分页列表数据
+            checkIds: [],
+            multipleSelection: []
+
+        },
+        //钩子函数，VUE对象初始化完成后自动执行
+        created() {
+            this.findPage();
+        },
+        methods: {
+            //分页查询
+            findPage() {
+                var param = {
+                    pageSize: this.pagination.pageSize,
+                    currentPage: this.pagination.currentPage,
+                    queryString: this.pagination.queryString
+                };
+                axios.post("/spuLog/findAll", param).then((res) => {
+                    this.pagination.total = res.data.total;
+                    this.dataList = res.data.rows;
+                })
+
+            },
+
+            toggleSelection(rows) {
+                this.checkIds = [];
+                if (rows) {
+                    rows.forEach(row => {
+                        this.$refs.multipleTable.toggleRowSelection(row);
+                    });
+                } else {
+                    this.$refs.multipleTable.clearSelection();
+                }
+                // alert(this.checkIds)
+            },
+            handleSelectionChange(selection) {
+
+                this.multipleSelection = selection;
+                // alert(this.multipleSelection)
+                this.checkIds = [];
+                for (let i = 0; i < selection.length; i++) {
+                    this.checkIds.push(selection[i].id)
+                }
+
+            },
+
+
+            //切换页码
+            handleCurrentChange(currentPage) {
+                this.pagination.currentPage = currentPage;
+                this.findPage();
+            },
+            //删除所有
+            delArray() {
+                /*this.dataList = this.multipleSelection;
+
+                alert(JSON.stringify(this.dataList));*/
+                // alert(this.checkIds)
+                this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+
+
+                    axios.post("/spuLog/deleteByIds?", this.checkIds).then((res) => {
+                        if (res.data.flag) {
+                            this.$message({
+                                message: res.data.message,
+                                type: 'success'
+                            });
+                            this.findPage();
+                        } else {
+                            this.$message.error(res.data.message);
+                        }
+                    }).catch((r) => { //axios对象请求的catch， 网络请求不是2xx
+                        this.showMessage(r);
+                    })
+                }).catch(() => {
+                    this.$message({
+
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                    this.toggleSelection();
+                });
+            },
+            // 删除
+            handleDelete(row) {
+                alert(JSON.stringify(row));
+                alert(row.id);
+                this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    axios.get("/syslog/deleteById?id=" + row.id).then((res) => {
+                        if (res.data.flag) {
+                            this.$message({
+                                message: res.data.message,
+                                type: 'success'
+                            });
+                            this.findPage();
+                        } else {
+                            this.$message.error(res.data.message);
+                        }
+                    }).catch((r) => { //axios对象请求的catch， 网络请求不是2xx
+                        this.showMessage(r);
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            }
+        },
+
+    })
+</script>
+</html>

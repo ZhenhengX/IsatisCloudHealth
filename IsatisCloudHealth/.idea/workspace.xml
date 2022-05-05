@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="454be79b-a0a8-4141-aca9-04f180a93575" name="变更" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="CLEAR_OUTPUT_DIRECTORY" value="false" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="HTML File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="JsBowerSettings">
+    <node-interpreter value="project" />
+    <bower-package value="" />
+    <bower.json value="" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="D:\Server\Maven\repository" />
+        <option name="mavenHome" value="D:/Server/Maven/apache-maven-3.8.1" />
+        <option name="userSettingsFile" value="D:\Server\Maven\apache-maven-3.8.1\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="downloadAnnotationsAutomatically" value="true" />
+        <option name="downloadDocsAutomatically" value="true" />
+        <option name="downloadSourcesAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenRunner">
+    <option name="jreName" value="11" />
+    <option name="vmOptions" value="-Xms128m -Xmx512m -Duser.language=zh -Dfile.encoding=UTF-8" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
+  </component>
+  <component name="ProjectId" id="27kA3W2cwOnptEJSH76BP7FvyMl" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/SQL 方言" value="MySQL" />
+    <property name="jdk.selected.JAVA_MODULE" value="17" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/view/src/main/resources/static/img" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="模块" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="template.copyright.formatting" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\view\src\main\resources\static\img" />
+      <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\view\src\main\resources" />
+      <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\Service\src\main\java\com\xzh\service\service\impl" />
+      <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\common\src\main\java\com\xzh\common" />
+      <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\Service\src\main\resources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\Service\src\main\resources\com\xzh\service" />
+      <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\Service\src\main\resources\com\xzh" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.xzh.system.config" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="JUnit.ViewApplicationTests.contextLoads">
+    <configuration name="MD5Utils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.xzh.common.utils.MD5Utils" />
+      <module name="common" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.xzh.common.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ViewApplicationTests.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="view" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.xzh.view.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.xzh.view" />
+      <option name="MAIN_CLASS_NAME" value="com.xzh.view.ViewApplicationTests" />
+      <option name="METHOD_NAME" value="contextLoads" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="Service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.xzh.service.ServiceApplication" />
+      <option name="ENABLE_JMX_AGENT" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SHORTEN_COMMAND_LINE" value="NONE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SubtleChatApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="SubtleChat" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.xzh.subtlechat.SubtleChatApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SHORTEN_COMMAND_LINE" value="NONE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ViewApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="view" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.xzh.view.ViewApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="JUnit.ViewApplicationTests.contextLoads" />
+      <item itemvalue="Spring Boot.SubtleChatApplication" />
+      <item itemvalue="Spring Boot.ViewApplication" />
+      <item itemvalue="Spring Boot.ServiceApplication" />
+      <item itemvalue="应用程序.MD5Utils" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.ViewApplicationTests.contextLoads" />
+        <item itemvalue="应用程序.MD5Utils" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="SpringGeneralSettings">
+    <option name="allowAutoConfigurationMode" value="true" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\86155\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="454be79b-a0a8-4141-aca9-04f180a93575" name="变更" comment="" />
+      <created>1649853510464</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1649853510464</updated>
+      <workItem from="1649853511611" duration="8986000" />
+      <workItem from="1649934337105" duration="1013000" />
+      <workItem from="1650041073290" duration="13000" />
+      <workItem from="1650041207414" duration="49000" />
+      <workItem from="1650041291600" duration="21000" />
+      <workItem from="1650041321836" duration="29000" />
+      <workItem from="1650041642708" duration="37000" />
+      <workItem from="1650041805046" duration="284000" />
+      <workItem from="1650455389048" duration="729000" />
+      <workItem from="1650459958070" duration="3881000" />
+      <workItem from="1650463887161" duration="2088000" />
+      <workItem from="1650466011825" duration="1851000" />
+      <workItem from="1650791681108" duration="9000" />
+      <workItem from="1650791942670" duration="15000" />
+      <workItem from="1650858610767" duration="857000" />
+      <workItem from="1650859819486" duration="41000" />
+      <workItem from="1650859872413" duration="24000" />
+      <workItem from="1650864877264" duration="2000" />
+      <workItem from="1650876762536" duration="2057000" />
+      <workItem from="1650949091370" duration="1000" />
+      <workItem from="1650949508793" duration="244000" />
+      <workItem from="1650949849261" duration="268000" />
+      <workItem from="1650950231216" duration="11464000" />
+      <workItem from="1651041757679" duration="22853000" />
+      <workItem from="1651065502154" duration="2973000" />
+      <workItem from="1651128120294" duration="4989000" />
+      <workItem from="1651134476182" duration="11068000" />
+      <workItem from="1651561703630" duration="18434000" />
+      <workItem from="1651581808966" duration="118000" />
+      <workItem from="1651581955648" duration="162000" />
+      <workItem from="1651582145563" duration="344000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

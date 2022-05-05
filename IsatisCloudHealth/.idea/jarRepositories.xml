@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteRepositoriesConfiguration">
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="https://mirrors.huaweicloud.com/repository/maven/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="a60ddbb8-5161-4606-985f-9a1d9d9867c3" />
+      <option name="name" value="a60ddbb8-5161-4606-985f-9a1d9d9867c3" />
+      <option name="url" value="https://maven.aliyun.com/nexus/content/groups/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="6ba57115-5ba3-4635-b59d-ac798c3814c3" />
+      <option name="name" value="6ba57115-5ba3-4635-b59d-ac798c3814c3" />
+      <option name="url" value="https://maven.aliyun.com/nexus/content/repositories/central/" />
+    </remote-repository>
+  </component>
+</project>

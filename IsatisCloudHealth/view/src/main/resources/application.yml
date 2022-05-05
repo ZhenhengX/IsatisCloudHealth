@@ -1,0 +1,37 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: View
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/health?serverTimezone=UTC
+      username: root
+      password: root
+  cloud:
+    nacos:
+      discovery:
+        username: nacos
+        password: nacos
+        server-addr: 127.0.0.1:8848
+        namespace: 056fac36-f20b-4863-9820-71d3deac550a
+  main:
+    allow-bean-definition-overriding: true
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+logging:
+  level:
+    com.xzh: debug
+feign:
+  client:
+    config:
+      default:
+        loggerlevel: BASIC
+  # feign性能优化，开启httpclient连接池
+  httpclient:
+    enabled: true
+    max-connections: 200
+    max-connections-per-route: 50
+
