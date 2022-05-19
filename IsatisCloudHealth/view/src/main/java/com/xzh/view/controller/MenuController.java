@@ -33,7 +33,7 @@ public class MenuController {
     @RequestMapping("/findAllMenu")
     public Result findAllMenu() {
         try {
-            List<Map<String, Integer>> list = menuService.findAllMenu();
+            List<Map<String, Object>> list = menuService.findAllMenu();
             return new Result(true, MessageConstant.QUERT_MENU_SUCCESS, list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,19 +52,24 @@ public class MenuController {
             }
 
             //通过菜单名与访问路径查找菜单,判断菜单是否存在，存在添加失败
-            List<Menu> menuList = menuService.findByNameAndLkurl(menu.getName(), menu.getLinkUrl());
+            List<Menu> menuList;
+            if (menu.getLinkUrl() == null) {
+                menuList = menuService.findByNameAndLkurl(menu.getName(), "null");
+            } else {
+                menuList = menuService.findByNameAndLkurl(menu.getName(), menu.getLinkUrl());
+            }
             if (menuList != null && menuList.size() > 0) {
                 return new Result(false, MessageConstant.ADD_MENU_FAIL + ",菜单名称或请求路径重复");
             }
 
             //判断二级菜单 访问路径 路径级别 自关联id
-            if (menu.getLinkUrl() != null && menu.getPath().contains("/") && menu.getParentMenuId() != null) {
+            if (menu.getLinkUrl() != null && menu.getParentMenuId() != null) {
                 menuService.add(menu);
                 return new Result(true, MessageConstant.ADD_MENU_SUCCESS);
             }
 
             //判断是一级菜单
-            if (menu.getLinkUrl() == null && !menu.getPath().contains("/") && menu.getParentMenuId() == null) {
+            if (menu.getLinkUrl() == null && menu.getParentMenuId() == null) {
                 menuService.add(menu);
                 return new Result(true, MessageConstant.ADD_MENU_SUCCESS);
             }
@@ -87,17 +92,9 @@ public class MenuController {
                 }
             }
             //为true是二级路径格式正确
-            boolean flag2 = (menu.getLinkUrl() != null && menu.getLinkUrl().length() > 0 && menu.getPath().contains("/") && menu.getParentMenuId() != null);
-            //判断二级菜单 访问路径 路径级别 自关联id
-            /*if (!()) {
-                return new Result(false, MessageConstant.EDIT_MENU_FAIL + ",修改为二级菜单格式有误");
-            }*/
+            boolean flag2 = (menu.getLinkUrl() != null && menu.getLinkUrl().length() > 0 && menu.getParentMenuId() != null);
             //为true是一级路径正确
-            boolean flag1 = (menu.getLinkUrl() == null || menu.getLinkUrl().equals("") && !menu.getPath().contains("/") && menu.getParentMenuId() == null);
-            //判断是一级菜单
-            /*if (!(()) {
-                return new Result(false, MessageConstant.EDIT_MENU_FAIL + ",修改为一级菜单格式有误");
-            }*/
+            boolean flag1 = (menu.getLinkUrl() == null || menu.getLinkUrl().equals("") && menu.getParentMenuId() == null);
 
             if (flag1 || flag2) {
                 //通过id查找修改前的菜单

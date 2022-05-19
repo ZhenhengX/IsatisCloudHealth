@@ -11,7 +11,7 @@ public interface CheckItemDao extends BaseMapper<CheckItem> {
 
     //查询所有
     @Select("<script>" +
-            "select * from t_check_item" +
+            "select * from h_check_item" +
             "        <if test=\"queryString!=null and queryString.length>0\">" +
             "            where code=#{queryString} or name =#{queryString}" +
             "        </if>" +
@@ -19,6 +19,6 @@ public interface CheckItemDao extends BaseMapper<CheckItem> {
     Page<CheckItem> selectByCondition(String queryString);
 
     //查询有无关联关系
-    @Select("select count(*) from t_checkgroup_checkitem where checkitem_id=#{id}")
+    @Select("select count(*) from h_checkgroup_checkitem where checkitem_id=#{id}")
     long findCountCheckItemID(Integer id);
 }

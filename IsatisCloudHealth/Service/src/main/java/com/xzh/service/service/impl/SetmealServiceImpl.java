@@ -3,15 +3,14 @@ package com.xzh.service.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.xzh.common.constant.RedisConstant;
 import com.xzh.common.entity.PageResult;
 import com.xzh.common.entity.QueryPageBean;
 import com.xzh.common.pojo.Setmeal;
+import com.xzh.common.utils.AliyunOssUtils;
 import com.xzh.service.dao.SetmealDao;
 import com.xzh.service.service.SetmealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.JedisPool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,9 +22,6 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealDao, Setmeal> impleme
 
     @Autowired
     private SetmealDao setmealDao;
-    //注入JedisPool
-    @Autowired
-    private JedisPool jedisPool;
 
     //新增
     @Override
@@ -36,12 +32,6 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealDao, Setmeal> impleme
         Integer setmealId = setmeal.getId();
         //调用新增关联关系方法
         this.setSetmealIdAndCheckGroupId(setmealId, checkgroupIds);
-        //获取图片名称
-        String fileName = setmeal.getImg();
-        if (fileName != null && !fileName.equals("")) {
-            //新建套餐成功之后将图片名称存入Redis小集合中
-            jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_DB_RESOURCES, fileName);
-        }
     }
 
     //分页查询
@@ -93,14 +83,6 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealDao, Setmeal> impleme
     //编辑套餐
     @Override
     public void edit(Setmeal setmeal, Integer[] checkgroupIds, String tempImgId) {
-        //把Redis中小集合中存的图片名称替换
-        if (tempImgId != null && !tempImgId.equals("")) {
-            //清理Redis中小集合内的原图片名
-            jedisPool.getResource().srem(RedisConstant.SETMEAL_PIC_DB_RESOURCES, tempImgId);
-            //将更新后的图片名称存入Redis
-            String fileName = setmeal.getImg();
-            jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_DB_RESOURCES, fileName);
-        }
         //编辑套餐
         setmealDao.updateById(setmeal);
         //获取SetmealId
@@ -116,28 +98,23 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealDao, Setmeal> impleme
     //删除套餐
     @Override
     public void delete(Integer setMealId, String imgId) {
-        //删除Redis中小集合中的图片
-        if (imgId != null && !imgId.equals("")) {
-            jedisPool.getResource().srem(RedisConstant.SETMEAL_PIC_DB_RESOURCES, imgId);
-        }
-        //删除操作
         if (setMealId != null) {
-            //先删除关联关系
+            // 删除OSS图片
+            AliyunOssUtils.delete(setmealDao.selectById(setMealId).getImg());
+            // 先删除关联关系
             setmealDao.deleteSetmealAndCheckgroup(setMealId);
-            //根据id删除套餐
+            // 根据id删除套餐
             setmealDao.deleteById(setMealId);
         }
     }
 
-    //抽取的新增关联关系的方法
+    // 存储setMeal和checkGroup的关联关系
     public void setSetmealIdAndCheckGroupId(Integer setmealId, Integer[] checkgroupIds) {
-        //判断检查项ids数组是否为空
         if (checkgroupIds != null && checkgroupIds.length > 0) {
-            //不为空则遍历数组，用map存储CheckItemId和CheckGroupId
             for (Integer checkgroupId : checkgroupIds) {
-                Map map = new HashMap<>();
-                map.put("setmealId", setmealId);
-                map.put("checkgroupId", checkgroupId);
+                Map<String, Integer> map = new HashMap<>();
+                map.put("setMealId", setmealId);
+                map.put("checkGroupId", checkgroupId);
                 //新增关联关系
                 setmealDao.setSetmealIdAndCheckGroupId(map);
             }

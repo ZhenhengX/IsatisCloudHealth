@@ -11,7 +11,6 @@ import com.xzh.common.entity.Result;
 import com.xzh.common.pojo.Member;
 import com.xzh.common.pojo.Order;
 import com.xzh.common.utils.DateUtils;
-import com.xzh.common.utils.MD5Utils;
 import com.xzh.service.dao.MemberDao;
 import com.xzh.service.dao.OrderDao;
 import com.xzh.service.dao.SetmealDao;
@@ -30,7 +29,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, Member> implements
     @Autowired
     private OrderDao orderDao;
 
-    ///根据手机号查询会员
+    // 根据手机号查询会员
     @Override
     public Member findByTelephone(String telephone) {
         Member member = null;
@@ -40,16 +39,18 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, Member> implements
         return member;
     }
 
+    // 根据手机号密码查询会员（登录用）
+    public Member findByTelephoneAndPassword(String telephone, String password) {
+        LambdaQueryWrapper<Member> lambdaQueryWrapper = Wrappers.lambdaQuery(Member.class);
+        lambdaQueryWrapper.eq(Member::getPhoneNumber, telephone);
+        lambdaQueryWrapper.eq(Member::getPassword, password);
+        return memberDao.selectOne(lambdaQueryWrapper);
+    }
+
     //新增会员
     @Override
     public void add(Member member) {
         if (member != null) {
-            String password = member.getPassword();
-            if (password != null) {
-                //使用md5加密
-                password = MD5Utils.md5(password);
-                member.setPassword(password);
-            }
             memberDao.insert(member);
         }
     }

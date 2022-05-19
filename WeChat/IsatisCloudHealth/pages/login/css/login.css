@@ -1,0 +1,42 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* 头部 logo */
+.header {
+    width: 161rpx;
+    height: 161rpx;
+    box-shadow: 0rpx 0rpx 60rpx 0rpx rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    background-color: #000000;
+    margin-top: 128rpx;
+    margin-bottom: 72rpx;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.header image {
+    width: 161rpx;
+    height: 161rpx;
+    border-radius: 50%;
+}
+
+/* 主体 */
+.main {
+    display: flex;
+    flex-direction: column;
+    padding-left: 70rpx;
+    padding-right: 70rpx;
+}
+
+/* 登录按钮 */
+.wbutton {
+    margin-top: 96rpx;
+}
+
+/* 登录按钮 */
+.reg_wbutton {
+    margin-top: 20rpx;
+}

@@ -255,14 +255,6 @@
                     this.days.push(dayobject);
                 }
 
-                /*this.leftobj = [
-                    { date: 1, number: 120, reservations: 1 },
-                    { date: 3, number: 120, reservations: 1 },
-                    { date: 4, number: 120, reservations: 119 },
-                    { date: 6, number: 120, reservations: 1 },
-                    { date: 8, number: 120, reservations: 1 }
-                ];*/
-
                 //发送ajax请求，根据当前页面对应的月份查询数据库，封装成相应结果赋值给leftobj模型数据，用于页面展示
                 axios.post("/ordersetting/getOrderSettingByMonth?date=" + this.currentYear + "-" + this.currentMonth).then((res) => {
                     if (res.data.flag) {

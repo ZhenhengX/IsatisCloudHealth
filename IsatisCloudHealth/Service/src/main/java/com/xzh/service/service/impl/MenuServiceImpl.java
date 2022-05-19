@@ -37,12 +37,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuDao, Menu> implements MenuS
         //进行分页设置
         Page<Menu> menuPage = new Page<>(currentPage, pageSize);
         LambdaQueryWrapper<Menu> queryWrapper = Wrappers.lambdaQuery(Menu.class);
-        if (queryString == null || queryString.isEmpty()) {
-            queryWrapper.isNull(Menu::getParentMenuId);
-        } else {
+        if (queryString != null && queryString.length() > 0) {
             queryWrapper.like(Menu::getName, queryString);
-            queryWrapper.and(menuLambdaQueryWrapper -> menuLambdaQueryWrapper.isNull(Menu::getParentMenuId));
         }
+        queryWrapper.orderByAsc(Menu::getPath);
+
         Page<Menu> page = this.page(menuPage, queryWrapper);
 
         return new PageResult(page.getTotal(), page.getRecords());
@@ -50,10 +49,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuDao, Menu> implements MenuS
     }
 
     /**
-     * 查询所有额菜单名称与菜单id
+     * 查询所有菜单名称与菜单id
      */
-    public List<Map<String, Integer>> findAllMenu() {
-
+    public List<Map<String, Object>> findAllMenu() {
         return menuDao.findMenus();
     }
 
@@ -63,7 +61,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuDao, Menu> implements MenuS
     public List<Menu> findByNameAndLkurl(String name, String linkUrl) {
         LambdaQueryWrapper<Menu> queryWrapper = Wrappers.lambdaQuery(Menu.class);
         queryWrapper.eq(Menu::getName, name);
-        if (linkUrl != null && linkUrl.length() > 0) {
+        if (linkUrl != null && !linkUrl.equals("null") && linkUrl.length() > 0) {
             queryWrapper.or();
             queryWrapper.eq(Menu::getLinkUrl, linkUrl);
         }

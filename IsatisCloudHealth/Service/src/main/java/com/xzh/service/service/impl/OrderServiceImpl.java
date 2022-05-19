@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.xzh.common.constant.MessageConstant;
-import com.xzh.common.constant.RedisMessageConstant;
 import com.xzh.common.entity.Conditions;
 import com.xzh.common.entity.PageResult;
 import com.xzh.common.entity.Result;
@@ -20,10 +19,9 @@ import com.xzh.service.service.MemberService;
 import com.xzh.service.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +37,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, Order> implements Or
     @Autowired
     private MemberService memberService;
     @Autowired
-    private JedisPool jedisPool;
+    private SetmealServiceImpl setmealService;
 
     //体检预约
     @Override
@@ -64,51 +62,29 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, Order> implements Or
             return new Result(false, MessageConstant.ORDER_FULL);
         }
         //3.检查该用户是否重复预约同一套餐
-        //4、检查当前用户是否为会员，如果是会员则直接完成预约，如果不是会员则自动完成注册并进行预约
         //获取用户手机号
         String telephone = (String) map.get("telephone");
         //根据手机号查询会员信息
         Member member = memberService.findByTelephone(telephone);
-        //如果该用户是会员
-        if (member != null) {
-            //获取会员id
-            Integer memberId = member.getId();
-            //获取套餐id
-            Integer setmealId = Integer.parseInt((String) map.get("setmealId"));
-            Order order = new Order(memberId, date, setmealId);
-            //根据条件查询
-            List<Order> list = orderDao.findByCondition(order);
-            if (list != null && list.size() > 0) {
-                //到这说明在重复预约
-                return new Result(false, MessageConstant.HAS_ORDERED);
-            }
+
+        //获取会员id
+        Integer memberId = member.getId();
+        //获取套餐id
+        Integer setmealId = Integer.parseInt((String) map.get("setmealId"));
+        Order order = new Order(memberId, date, setmealId);
+        //根据条件查询
+        List<Order> list = orderDao.findByCondition(order);
+        if (list != null && list.size() > 0) {
+            //重复预约
+            return new Result(false, MessageConstant.HAS_ORDERED);
         }
-        //如果用户不是会员则立即创建
-        else {
-            member = new Member();
-            member.setName((String) map.get("name"));
-            member.setPhoneNumber(telephone);
-            member.setIdCard((String) map.get("idCard"));
-            member.setSex((String) map.get("sex"));
-            member.setRegTime(new Date());
-            //自动完成会员注册
-            memberDao.insert(member);
-        }
-        //5.预约成功，更新当日的已预约人数
-        Order order = new Order();
-        //会员ID
-        order.setMemberId(member.getId());
-        //预约日期
-        order.setOrderDate(date);
+        order.setOrderName((String) map.get("name"));
         //预约类型
         order.setOrderType((String) map.get("orderType"));
         //就诊状态
         order.setOrderStatus(Order.ORDERSTATUS_NO);
-        //套餐ID
-        order.setSetmealId(Integer.parseInt((String) map.get("setmealId")));
-        //新增预约信息
         orderDao.insert(order);
-        //设置已预约人数+1
+        //5.预约成功，设置已预约人数+1
         orderSetting.setReservations(orderSetting.getReservations() + 1);
         //根据预约日期修改已预约人数
         orderSettingDao.editReservationsByOrderDate(orderSetting);
@@ -117,149 +93,85 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, Order> implements Or
 
     //根据id查询预约信息
     @Override
-    public Map findById(Integer id) throws Exception {
-        Map map = orderDao.findById4Detail(id);
-        if (map != null) {
-            //处理日期格式
-            Date date = (Date) map.get("orderDate");
-            String orderDate = DateUtils.parseDate2String(date);
-            map.put("orderDate", orderDate);
-        }
+    public Map<String, Object> findById(Integer id) throws Exception {
+        Order order = orderDao.selectById(id);
+        Map<String, Object> map = new HashMap<>();
+        map.put("member", order.getOrderName());
+        map.put("setmeal", setmealService.findById(order.getSetmealId()).getName());
+        map.put("orderDate", DateUtils.parseDate2String(order.getOrderDate()));
+        map.put("orderType", order.getOrderType());
         return map;
     }
 
     /**
-     * 提交数据
+     * 微信预约
      */
     @Override
     public Result submit(Map dataMap) {
-        //验证生成的验证码和用户输入的验证码是否一致
         //查询用户选择的预约日期是否允许预约
         //查询用户选择的日期是否已经满员
-        //查看用户是否是会员（根据手机号查询，不是会员自动注册成会员，是会员查看该用户是否已经预约）
-        //进行预约操作(更新t_order表,更新已预约的人数,发送预约成功短信)
-        //以上顺序不能打乱
+        //进行预约操作(更新h_order表,更新已预约的人数,发送预约成功短信)
 
-
-        //因为有更新已预约人数的操作，所以我们前面写的后台查看预约信息这个也可以用的上
-
-        Jedis resource = jedisPool.getResource();
-
+        //获取体检日期
+        String orderDate = (String) dataMap.get("orderDate");
+        Date order_Date = null;
         try {
-            //当时生成的验证码
-            String generateValidateCode = resource.get((String) dataMap.get("telephone") + RedisMessageConstant.SENDTYPE_ORDER);
-            //用户输入的验证码
-            String inputValidateCode = (String) dataMap.get("validateCode");
-            if (generateValidateCode != null && inputValidateCode != null && generateValidateCode.equals(inputValidateCode)) {
-                //验证码比较正确
-
-                //获取体检日期
-                String orderDate = (String) dataMap.get("orderDate");
-                Date order_Date = DateUtils.parseString2Date(orderDate);
-
-                //根据体检日期查询并把结果封装成OrderSetting对象
-                OrderSetting orderSetting = orderSettingDao.findByOrderDate(order_Date);
-
-                if (orderSetting != null) {
-                    //说明用户选择的日期允许预约
-
-                    //当天可预约的人数
-                    int number = orderSetting.getNumber();
-                    //当天已预约的人数
-                    int reservations = orderSetting.getReservations();
-                    if (number > 0 && reservations < number) {
-                        //说明当天可以预约
-
-                        //根据手机号查询用户
-                        Member member = memberService.findByTelephone((String) dataMap.get("telephone"));
-                        if (member != null) {
-                            //该用户已注册
-
-                            //查询该用户对应的memberId
-                            Integer memberId = member.getId();
-
-                            //把该用户对应的memberId、预约日期、套餐id封装成order对象
-                            Order order = new Order(memberId, order_Date, Integer.parseInt((String) dataMap.get("setmealId")));
-
-                            //查询该用户对应的预约
-                            List<Order> orderList = orderDao.findByCondition(order);
-
-                            if (orderList != null && orderList.size() > 0) {
-                                //该用户已经预约了
-                                return new Result(false, MessageConstant.HAS_ORDERED);
-                            } else {
-                                //完善该预约信息
-                                Order order1 = new Order(memberId, order_Date, Order.ORDERTYPE_WEIXIN, Order.ORDERSTATUS_NO, Integer.parseInt((String) dataMap.get("setmealId")));
-                                //更新t_order表（添加）
-                                orderDao.insert(order1);
-
-                                //设置预约人数+1
-                                orderSetting.setReservations(orderSetting.getReservations() + 1);
-                                orderSettingDao.editReservationsByOrderDate(orderSetting);
-
-                                //发送预约成功短信
-                                //阿里云目前不支持发送自定义通知，所以这里就不发送了
-                                //放在service层是因为配置了事务，要成功都成功，要失败都失败
-                                //SMSUtils.sendNoticeOfOeder(SMSUtils.ORDER_NOTICE, (String) dataMap.get("telephone"), (String) dataMap.get("name"), (String) dataMap.get("orderDate"));
-
-                                //返回预约成功后新增的那条预约的id
-                                return new Result(true, MessageConstant.ORDER_SUCCESS, order1.getId());
-                            }
-
-                        } else {
-                            //该用户没有进行注册(member==null)
-                            //对该用户进行注册
-                            member = new Member();
-                            member.setName((String) dataMap.get("name"));
-                            member.setPhoneNumber((String) dataMap.get("telephone"));
-                            member.setIdCard((String) dataMap.get("idCard"));
-                            member.setSex((String) dataMap.get("sex"));
-
-                            //把该用户添加进member表中
-                            memberDao.insert(member);
-
-                            //返回用户添加成功后用户的id
-                            Integer memberId = member.getId();
-
-                            //更新t_order表（添加）
-                            Order order1 = new Order(memberId, order_Date, Order.ORDERTYPE_WEIXIN, Order.ORDERSTATUS_NO, Integer.parseInt((String) dataMap.get("setmealId")));
-                            orderDao.insert(order1);
-
-                            //设置预约人数+1
-                            orderSetting.setReservations(orderSetting.getReservations() + 1);
-                            orderSettingDao.editReservationsByOrderDate(orderSetting);
-
-                            //发送预约成功短信
-                            //阿里云目前不支持发送自定义通知，所以这里就不发送了
-                            //放在service层是因为配置了事务，要成功都成功，要失败都失败
-                            //SMSUtils.sendNoticeOfOeder(SMSUtils.ORDER_NOTICE, (String) dataMap.get("telephone"), (String) dataMap.get("name"), (String) dataMap.get("orderDate"));
-
-                            //返回预约成功后新增的那条预约的id
-                            return new Result(true, MessageConstant.ORDER_SUCCESS, order1.getId());
-                        }
-
-                    } else {
-                        //当天预约人数已满
-                        return new Result(false, MessageConstant.ORDER_FULL);
-                    }
-
-                } else {
-                    //说明用户选择的日期不允许预约
-                    return new Result(false, MessageConstant.SELECTED_DATE_CANNOT_ORDER);
-                }
-            } else {
-                //返回验证码输入错误
-                return new Result(false, MessageConstant.VALIDATECODE_ERROR);
-            }
+            order_Date = DateUtils.parseString2Date(orderDate);
         } catch (Exception e) {
             //日期格式解析异常
             e.printStackTrace();
             return new Result(false, "日期格式解析失败");
-        } finally {
-            //释放资源
-            if (resource != null) {
-                resource.close();
+        }
+
+        //根据体检日期查询并把结果封装成OrderSetting对象
+        OrderSetting orderSetting = orderSettingDao.findByOrderDate(order_Date);
+
+        if (orderSetting != null) {
+            //说明用户选择的日期允许预约
+
+            //当天可预约的人数
+            int number = orderSetting.getNumber();
+            //当天已预约的人数
+            int reservations = orderSetting.getReservations();
+            if (number > 0 && reservations < number) {
+                Integer memberId = (Integer) dataMap.get("memberId");
+                //把该用户对应的memberId、预约日期、套餐id封装成order对象
+                Order order = new Order();
+                order.setIdCard((String) dataMap.get("idCard"));
+                order.setOrderDate(order_Date);
+                order.setSetmealId(Integer.parseInt(dataMap.get("setmealId").toString()));
+                //查询该用户对应的预约
+                List<Order> orderList = orderDao.findByCondition(order);
+                if (orderList != null && orderList.size() > 0) {
+                    //该用户已经预约了
+                    return new Result(false, MessageConstant.HAS_ORDERED);
+                } else {
+                    //完善该预约信息
+                    order = new Order(memberId, order_Date, Order.ORDERTYPE_WEIXIN, Order.ORDERSTATUS_NO, Integer.parseInt(dataMap.get("setmealId").toString()));
+                    order.setOrderName((String) dataMap.get("name"));
+                    order.setSex((Integer) dataMap.get("sex"));
+                    order.setTelephone((String) dataMap.get("telephone"));
+                    order.setIdCard((String) dataMap.get("idCard"));
+                    //更新h_order表（添加）
+                    orderDao.insert(order);
+
+                    //设置预约人数+1
+                    orderSetting.setReservations(orderSetting.getReservations() + 1);
+                    orderSettingDao.editReservationsByOrderDate(orderSetting);
+
+                    //返回预约成功后新增的那条预约的id
+                    return new Result(true, MessageConstant.ORDER_SUCCESS, order.getId());
+                }
+
+
+            } else {
+                //当天预约人数已满
+                return new Result(false, MessageConstant.ORDER_FULL);
             }
+
+        } else {
+            //说明用户选择的日期不允许预约
+            return new Result(false, MessageConstant.SELECTED_DATE_CANNOT_ORDER);
         }
     }
 
@@ -450,6 +362,30 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, Order> implements Or
             orderStatus = "已到诊";
         }
         orderDao.update1(orderStatus, orderId);
+    }
+
+    /**
+     * 根据会员id查询预约信息
+     */
+    public List<Map<String, Object>> findOrderByMemberId(Integer id) {
+        return orderDao.findOrderByMemberId(id);
+    }
+
+    /**
+     * 根据orderId更新检查报告
+     */
+    public Integer updateCheckReport(Integer orderId, Map<String, Map<String, String>> checkReport) {
+        Order order = new Order();
+        order.setId(orderId);
+        order.setCheckReport(checkReport);
+        return orderDao.updateById(order);
+    }
+
+    /**
+     * 根据orderId查询检查报告
+     */
+    public Map<String, Map<String, String>> findCheckReportByOrderId(Integer orderId) {
+        return orderDao.selectById(orderId).getCheckReport();
     }
 
 }

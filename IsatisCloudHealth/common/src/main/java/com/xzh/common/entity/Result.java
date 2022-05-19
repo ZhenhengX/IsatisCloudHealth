@@ -16,10 +16,18 @@ public class Result implements Serializable {
     public Result() {
     }
 
+    public Result(boolean flag) {
+        this.flag = flag;
+    }
+
     public Result(boolean flag, String message) {
-        super();
         this.flag = flag;
         this.message = message;
+    }
+
+    public Result(boolean flag, Object data) {
+        this.flag = flag;
+        this.data = data;
     }
 
     public Result(boolean flag, String message, Object data) {

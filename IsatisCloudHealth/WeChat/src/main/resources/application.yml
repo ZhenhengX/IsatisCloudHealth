@@ -1,0 +1,27 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: WeChat
+  cloud:
+    nacos:
+      discovery:
+        username: nacos
+        password: nacos
+        server-addr: 127.0.0.1:8848
+  main:
+    allow-bean-definition-overriding: true
+logging:
+  level:
+    com.xzh: debug
+feign:
+  client:
+    config:
+      default:
+        loggerlevel: BASIC
+  # feign性能优化，开启httpclient连接池
+  httpclient:
+    enabled: true
+    max-connections: 200
+    max-connections-per-route: 50
+

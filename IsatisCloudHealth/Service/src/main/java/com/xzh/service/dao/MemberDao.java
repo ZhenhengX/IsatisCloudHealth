@@ -14,43 +14,43 @@ import java.util.Map;
 public interface MemberDao extends BaseMapper<Member> {
 
     //查询指定月份之前会员总数
-    @Select("select count(id) from t_member where regTime <= #{month}")
+    @Select("select count(id) from h_member where regTime <= #{month,jdbcType=DATE}")
     Integer findMemberCountBeforeDate(String month);
 
     //获取会员总数
-    @Select("select count(id) from t_member")
+    @Select("select count(id) from h_member")
     Integer findMemberTotalCount();
 
     //获取指定日期之后的会员总数
-    @Select("select count(id) from t_member where regTime >= #{thisWeekMonday}")
+    @Select("select count(id) from h_member where regTime >= #{thisWeekMonday,jdbcType=DATE}")
     Integer findMemberCountAfterDate(String thisWeekMonday);
 
     //对健康管理师的回显
-    @Select("select a.username from t_user a join t_user_role b on a.id=b.user_id where b.role_id=(select id from t_role where name= '健康管理师' );")
+    @Select("select a.username from h_user a join h_user_role b on a.id=b.user_id where b.role_id=(select id from h_role where name= '健康管理师' );")
     List<String> findHealthManager();
 
     //查询所有关联信息
     @Select("SELECT" +
-            "    t_check_group.`name` AS checkgroups," +
-            "    t_check_item.`name` AS checkitems," +
-            "    t_setmeal.`name` AS setmeal," +
-            "    t_address.`detailaddress` AS address " +
+            "    h_check_group.`name` AS checkgroups," +
+            "    h_check_item.`name` AS checkitems," +
+            "    h_setmeal.`name` AS setmeal," +
+            "    h_address.`detailaddress` AS address " +
             "FROM" +
-            "    t_check_group" +
-            "    INNER JOIN t_checkgroup_checkitem ON t_checkgroup_checkitem.checkgroup_id = t_check_group.id" +
-            "    INNER JOIN t_check_item ON t_checkgroup_checkitem.checkitem_id = t_check_item.id" +
-            "    INNER JOIN t_setmeal_checkgroup ON t_setmeal_checkgroup.checkgroup_id = t_check_group.id" +
-            "    INNER JOIN t_setmeal ON t_setmeal_checkgroup.setmeal_id = t_setmeal.id" +
-            "    INNER JOIN t_order ON t_order.setmeal_id = t_setmeal.id" +
-            "    INNER JOIN t_member ON t_order.member_id = t_member.id" +
-            "    INNER JOIN t_address ON t_order.address_id = t_address.id " +
+            "    h_check_group" +
+            "    INNER JOIN h_checkgroup_checkitem ON h_checkgroup_checkitem.checkgroup_id = h_check_group.id" +
+            "    INNER JOIN h_check_item ON h_checkgroup_checkitem.checkitem_id = h_check_item.id" +
+            "    INNER JOIN h_setmeal_checkgroup ON h_setmeal_checkgroup.checkgroup_id = h_check_group.id" +
+            "    INNER JOIN h_setmeal ON h_setmeal_checkgroup.setmeal_id = h_setmeal.id" +
+            "    INNER JOIN h_order ON h_order.setmeal_id = h_setmeal.id" +
+            "    INNER JOIN h_member ON h_order.member_id = h_member.id" +
+            "    INNER JOIN h_address ON h_order.address_id = h_address.id " +
             "WHERE" +
-            "    t_member.id = #{id}")
+            "    h_member.id = #{id}")
     List<Map<String, Object>> findAllmessageById(Integer id);
 
-    @Update(" UPDATE  t_member set healthmanager = #{healthName} where id  in  (SELECT t_order.member_id FROM t_order where id = #{id})")
+    @Update(" UPDATE  h_member set healthmanager = #{healthName} where id  in  (SELECT h_order.member_id FROM h_order where id = #{id})")
     void update(@Param("id") Integer tempOrderId, @Param("healthName") String username);
 
-    @Select("select * from t_member where email=#{email} and password=#{md5_password}")
+    @Select("select * from h_member where email=#{email} and password=#{md5_password}")
     Member findByEmailAndPwd(@Param("email") String email, @Param("password") String md5_password);
 }

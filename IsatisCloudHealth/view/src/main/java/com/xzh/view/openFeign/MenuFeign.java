@@ -17,7 +17,7 @@ public interface MenuFeign {
     PageResult findPage(@RequestBody QueryPageBean queryPageBean);
 
     @GetMapping("findAllMenu")
-    List<Map<String, Integer>> findAllMenu();
+    List<Map<String, Object>> findAllMenu();
 
     @GetMapping("findByNameAndLkurl/{name}/{linkUrl}")
     List<Menu> findByNameAndLkurl(@PathVariable("name") String name, @PathVariable("linkUrl") String linkUrl);

@@ -2,12 +2,11 @@ package com.xzh.view.controller;
 
 
 import com.xzh.common.constant.MessageConstant;
-import com.xzh.common.constant.RedisConstant;
 import com.xzh.common.entity.PageResult;
 import com.xzh.common.entity.QueryPageBean;
 import com.xzh.common.entity.Result;
 import com.xzh.common.pojo.Address;
-import com.xzh.common.utils.QiniuUtils;
+import com.xzh.common.utils.AliyunOssUtils;
 import com.xzh.view.openFeign.AddressFeign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,8 +24,6 @@ public class AddressController {
 
     @Autowired
     private AddressFeign addressFeign;
-    @Autowired
-    private JedisPool jedisPool;
 
     //文件上传
     @RequestMapping("/upload")
@@ -41,10 +36,8 @@ public class AddressController {
         //使用UUID创建随机不重复的文件名称加上后缀名称存入数据库
         String imgName = UUID.randomUUID() + extension;
 
-        try (Jedis resource = jedisPool.getResource()) {
-            QiniuUtils.upload2Qiniu(imgFile.getBytes(), imgName);
-            //图片上传成功后保存图片名称存入redis,基于redis的set集合存储
-            resource.sadd(RedisConstant.ADDRESS_PIC_RESOURCES, imgName);
+        try {
+            AliyunOssUtils.upload(imgFile.getBytes(), imgName);
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false, MessageConstant.PIC_UPLOAD_FAIL);

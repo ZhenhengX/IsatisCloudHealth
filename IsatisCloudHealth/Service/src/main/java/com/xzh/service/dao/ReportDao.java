@@ -11,15 +11,15 @@ public interface ReportDao {
     /**
      * 查询已预约的套餐的名称和对应的已预约的套餐的数量
      */
-    @Select("select count(id) from t_order where orderDate =#{date}")
+    @Select("select count(id) from h_order where orderDate =#{date}")
     Integer findOrderByMonth(String date);
 
-    @Select("select count(id) from t_order where orderDate = #{value} and orderStatus = '已到诊'")
+    @Select("select count(id) from h_order where orderDate = #{date2String} and orderStatus = '已到诊'")
     Integer findArriveByMonth(String date2String);
 
-    @Select("SELECT t_setmeal.name AS name, SUM(t_setmeal.price) AS value" +
-            "        FROM t_order INNER JOIN t_setmeal ON t_order.setmeal_id = t_setmeal.id" +
-            "        GROUP BY t_setmeal.price")
+    @Select("SELECT h_setmeal.name AS name, SUM(h_setmeal.price) AS value" +
+            "        FROM h_order INNER JOIN h_setmeal ON h_order.setmeal_id = h_setmeal.id" +
+            "        GROUP BY h_setmeal.price")
     List<Map> findSetmealMoney();
 
 }

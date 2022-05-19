@@ -14,22 +14,22 @@ import java.util.Map;
 @Mapper
 public interface OrderSettingDao extends BaseMapper<OrderSetting> {
     //查询日期是否存在
-    @Select("select count(*) from t_order_setting where orderDate=#{orderDate}")
+    @Select("select count(*) from h_order_setting where orderDate=#{orderDate,jdbcType=DATE}")
     long findCountByOrderDate(Date orderDate);
 
     //根据日期修改可预约人数
-    @Update("update t_order_setting set number=#{number} where orderDate=#{orderDate}")
+    @Update("update h_order_setting set number=#{number} where orderDate=#{orderDate,jdbcType=DATE}")
     void updateByDate(OrderSetting orderSetting);
 
     //根据月份查询预约数据
-    @Select("SELECT * FROM t_order_setting WHERE orderDate BETWEEN #{begain} AND #{end}")
+    @Select("SELECT * FROM h_order_setting WHERE orderDate BETWEEN #{begain,jdbcType=DATE} AND #{end,jdbcType=DATE}")
     List<OrderSetting> getOrderSettingByMonth(Map<String, String> map);
 
     //根据日期查询预约设置
-    @Select("SELECT * FROM t_order_setting WHERE orderDate =#{date}")
+    @Select("SELECT * FROM h_order_setting WHERE orderDate =#{date,jdbcType=DATE}")
     OrderSetting findByOrderDate(Date date);
 
     //根据日期修改已预约人数
-    @Update("update t_order_setting set reservations=#{reservations} where orderDate=#{orderDate}")
+    @Update("update h_order_setting set reservations=#{reservations} where orderDate=#{orderDate,jdbcType=DATE}")
     void editReservationsByOrderDate(OrderSetting orderSetting);
 }

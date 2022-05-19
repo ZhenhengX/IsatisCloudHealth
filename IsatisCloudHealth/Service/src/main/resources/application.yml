@@ -6,7 +6,7 @@ spring:
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/health?serverTimezone=UTC
+      url: jdbc:mysql://localhost:3306/health?serverTimezone=GMT%2B8
       username: root
       password: root
   cloud:
@@ -15,26 +15,22 @@ spring:
         username: nacos
         password: nacos
         server-addr: 127.0.0.1:8848
-        namespace: 056fac36-f20b-4863-9820-71d3deac550a
   devtools:
     restart:
       # 设置开启热部署
       enabled: true
       # 启用热部署的目录
       additional-paths: src/main/java
-      # 排除的目录及文件
-      exclude: WEB-INF/**
 mybatis-plus:
   global-config:
     db-config:
-      table-prefix: t_
+      table-prefix: h_
       id-type: auto
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
 logging:
   level:
-    com.xzh: debug
+    com.xzh.service: debug
 feign:
   client:
     config:

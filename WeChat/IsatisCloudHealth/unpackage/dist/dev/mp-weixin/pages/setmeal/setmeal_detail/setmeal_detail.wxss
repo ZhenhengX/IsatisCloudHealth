@@ -1,0 +1,16 @@
+
+.keyword {
+    padding: 2px 8px;
+    color: #ea5504;
+    margin-right: 3.3%;
+    border: 1px solid #ffb891;
+    border-radius: 2px;
+}
+.tag {
+    padding: 1px 4px;
+    color: #18bc37;
+    margin-right: 3.3%;
+    border: 1px solid #18bc37;
+    border-radius: 1px;
+}
+

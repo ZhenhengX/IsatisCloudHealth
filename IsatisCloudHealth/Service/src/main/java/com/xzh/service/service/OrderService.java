@@ -55,4 +55,19 @@ public interface OrderService extends IService<Order> {
      * 修改就诊状态
      */
     void statusEdit(Integer orderStatusId, Integer orderId);
+
+    /**
+     * 根据会员id查询预约信息
+     */
+    List<Map<String, Object>> findOrderByMemberId(Integer id);
+
+    /**
+     * 根据orderId更新检查报告
+     */
+    Integer updateCheckReport(Integer orderId, Map<String, Map<String, String>> checkReport);
+
+    /**
+     * 根据orderId查询检查报告
+     */
+    Map<String, Map<String, String>> findCheckReportByOrderId(Integer orderId);
 }

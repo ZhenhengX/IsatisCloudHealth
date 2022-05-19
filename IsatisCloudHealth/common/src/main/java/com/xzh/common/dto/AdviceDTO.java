@@ -19,4 +19,7 @@ public class AdviceDTO implements Serializable {
         this.username = username;
         this.suggestion = suggestion;
     }
+
+    public AdviceDTO() {
+    }
 }

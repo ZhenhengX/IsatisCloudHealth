@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_TEST_SOURCES" value="false" />
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
@@ -16,9 +19,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="UML Class" />
         <option value="Interface" />
-        <option value="HTML File" />
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -66,6 +70,8 @@
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="DefaultPlantUmlFileTemplate" value="UML Class" />
+    <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
@@ -75,32 +81,34 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/SQL 方言" value="MySQL" />
     <property name="jdk.selected.JAVA_MODULE" value="17" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/view/src/main/resources/static/img" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/WeChat/src/main/resources" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.standard" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.standard" value="" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="模块" />
+    <property name="project.structure.last.edited" value="项目" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="template.copyright.formatting" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.uml" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\WeChat\src\main\resources" />
+      <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\WeChat\src\main\java\com\xzh\wechat" />
+      <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\WeChat\src\main\resources\static" />
       <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\view\src\main\resources\static\img" />
       <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\view\src\main\resources" />
-      <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\Service\src\main\java\com\xzh\service\service\impl" />
-      <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\common\src\main\java\com\xzh\common" />
-      <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\Service\src\main\resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\Service\src\main\resources\com\xzh\service" />
       <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\Service\src\main\resources\com\xzh" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.xzh.view.openFeign" />
+      <recent name="com.xzh.wechat.openFeign" />
       <recent name="com.xzh.system.config" />
     </key>
   </component>
@@ -111,7 +119,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.ViewApplicationTests.contextLoads">
+  <component name="RunManager" selected="JUnit.ServiceApplicationTests.contextLoads">
     <configuration name="MD5Utils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.xzh.common.utils.MD5Utils" />
       <module name="common" />
@@ -121,6 +129,22 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServiceApplicationTests.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.xzh.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.xzh.service" />
+      <option name="MAIN_CLASS_NAME" value="com.xzh.service.ServiceApplicationTests" />
+      <option name="METHOD_NAME" value="contextLoads" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -144,16 +168,7 @@
     <configuration name="ServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="Service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.xzh.service.ServiceApplication" />
-      <option name="ENABLE_JMX_AGENT" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="SHORTEN_COMMAND_LINE" value="NONE" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SubtleChatApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <module name="SubtleChat" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.xzh.subtlechat.SubtleChatApplication" />
+      <option name="HIDE_BANNER" value="true" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="SHORTEN_COMMAND_LINE" value="NONE" />
       <method v="2">
@@ -167,15 +182,27 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="WeChatApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="WeChat" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.xzh.wechat.WeChatApplication" />
+      <option name="HIDE_BANNER" value="true" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SHORTEN_COMMAND_LINE" value="NONE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="JUnit.ViewApplicationTests.contextLoads" />
-      <item itemvalue="Spring Boot.SubtleChatApplication" />
       <item itemvalue="Spring Boot.ViewApplication" />
       <item itemvalue="Spring Boot.ServiceApplication" />
+      <item itemvalue="Spring Boot.WeChatApplication" />
       <item itemvalue="应用程序.MD5Utils" />
+      <item itemvalue="JUnit.ServiceApplicationTests.contextLoads" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ServiceApplicationTests.contextLoads" />
         <item itemvalue="JUnit.ViewApplicationTests.contextLoads" />
         <item itemvalue="应用程序.MD5Utils" />
       </list>
@@ -226,6 +253,32 @@
       <workItem from="1651581808966" duration="118000" />
       <workItem from="1651581955648" duration="162000" />
       <workItem from="1651582145563" duration="344000" />
+      <workItem from="1651732836310" duration="1784000" />
+      <workItem from="1651759679976" duration="25000" />
+      <workItem from="1651759863506" duration="1164000" />
+      <workItem from="1651761885863" duration="100000" />
+      <workItem from="1651762075263" duration="894000" />
+      <workItem from="1651762991415" duration="402000" />
+      <workItem from="1651765154873" duration="633000" />
+      <workItem from="1651765795082" duration="1746000" />
+      <workItem from="1651820349928" duration="3000" />
+      <workItem from="1651821819327" duration="14000" />
+      <workItem from="1651832522955" duration="1650000" />
+      <workItem from="1651837244521" duration="5321000" />
+      <workItem from="1651842656771" duration="1807000" />
+      <workItem from="1652175799024" duration="93000" />
+      <workItem from="1652175913117" duration="5887000" />
+      <workItem from="1652362213888" duration="1393000" />
+      <workItem from="1652428955799" duration="3296000" />
+      <workItem from="1652432337421" duration="3263000" />
+      <workItem from="1652441171996" duration="4141000" />
+      <workItem from="1652446573449" duration="1262000" />
+      <workItem from="1652510724202" duration="775000" />
+      <workItem from="1652596504695" duration="4000" />
+      <workItem from="1652682702263" duration="16526000" />
+      <workItem from="1652705100456" duration="1041000" />
+      <workItem from="1652762986647" duration="25839000" />
+      <workItem from="1652856130641" duration="19540000" />
     </task>
     <servers />
   </component>

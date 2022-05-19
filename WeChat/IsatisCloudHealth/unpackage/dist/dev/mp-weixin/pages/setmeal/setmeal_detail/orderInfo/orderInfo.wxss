@@ -1,0 +1,9 @@
+
+.keyword {
+    padding: 2px 8px;
+    color: #ea5504;
+    margin-right: 3.3%;
+    border: 1px solid #ffb891;
+    border-radius: 2px;
+}
+

@@ -12,6 +12,11 @@
     <link href="../plugins/elementui/index.css" rel="stylesheet">
     <link href="../plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
+    <!-- 引入组件库 -->
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+    <script src="../js/jquery.min.js" type="text/javascript"></script>
+    <script src="../js/axios-0.18.0.js"></script>
     <style type="text/css">
         .el-main {
             position: absolute;
@@ -33,7 +38,6 @@
                     <span class="logo-lg"><img src="../img/loginLogo.png"></span>
                 </a>
                 <div class="right-menu">
-                    <span class="help"><i aria-hidden="true" class="fa fa-exclamation-circle"></i>帮助</span>
                     <el-dropdown class="avatar-container right-menu-item" trigger="click">
                         <div class="avatar-wrapper">
                             <img class="user-avatar" src="../img/user2-160x160.jpg">
@@ -41,14 +45,19 @@
                         </div>
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item divided>
-                                <span style="display:block;"><button
-                                        style="border: white;background: white;font-size: 15px"
-                                        @click="changePassword()">修改密码</button></span>
+                                <span style="display:block;">
+                                    <button style="border: white;background: white;font-size: 15px;"
+                                            @click="this.changePassword()">
+                                        修改密码
+                                    </button>
+                                </span>
                             </el-dropdown-item>
                             <el-dropdown-item divided>
-                                        <span style="display:block;" @click="logout()">
-                                            退出
-                                        </span>
+                                <span style="display:block;">
+                                    <button style="border: white;background: white;font-size: 15px;" @click="this.logout()">
+                                        退出
+                                    </button>
+                                </span>
                             </el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
@@ -101,17 +110,12 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取消</el-button>
-                <el-button type="primary" @click="handleChangePassword()">确定</el-button>
+                <el-button type="primary" @click="this.handleChangePassword()">确定</el-button>
             </div>
         </el-dialog>
     </div>
 </div>
 </body>
-<!-- 引入组件库 -->
-<script src="../js/vue.js"></script>
-<script src="../plugins/elementui/index.js"></script>
-<script src="../js/jquery.min.js" type="text/javascript"></script>
-<script src="../js/axios-0.18.0.js"></script>
 <script>
     new Vue({
         el: '#app',
@@ -146,7 +150,6 @@
                 }
             });
         },
-
         methods: {
             //弹出修改密码的弹框
             changePassword() {
@@ -188,20 +191,11 @@
 
             //退出操作
             logout() {
-                window.location.href = "/logout";
-            }
-
-        },
-        methods: {
-
-            //退出失败
-            logout() {
                 axios.post("/user/quit").then((res) => {
                     window.location.href = "/logout"
                 })
             },
-        }
-
+        },
     });
     $(function () {
         var wd = 200;

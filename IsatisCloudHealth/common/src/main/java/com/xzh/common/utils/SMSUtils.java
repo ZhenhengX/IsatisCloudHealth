@@ -12,7 +12,7 @@ import com.aliyuncs.profile.IClientProfile;
 import java.util.Date;
 
 /**
- * 短信发送工具类
+ * 阿里云短信发送工具类
  */
 public class SMSUtils {
     public static final String VALIDATE_CODE = "SMS_203670009";//发送短信验证码
@@ -20,10 +20,6 @@ public class SMSUtils {
 
     /**
      * 发送短信
-     *
-     * @param phoneNumbers
-     * @param param
-     * @throws ClientException
      */
     public static void sendShortMessage(String templateCode, String phoneNumbers, String param) throws ClientException {
         // 设置超时时间-可自行调整

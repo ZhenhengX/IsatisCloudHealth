@@ -14,15 +14,15 @@ import java.util.Set;
 public interface RoleDao extends BaseMapper<Role> {
 
     @Select("select r.*" +
-            "        from t_role r," +
-            "             t_user_role ur" +
+            "        from h_role r," +
+            "             h_user_role ur" +
             "        where r.id = ur.role_id" +
             "          and ur.user_id = #{userId}")
     Set<Role> findByUserId(Integer userId);
 
     @Select("<script>" +
             "select *" +
-            "        from t_role" +
+            "        from h_role" +
             "        <if test=\"queryString != null and queryString.length > 0\">" +
             "            where name like concat('%', #{queryString}, '%')" +
             "        </if>" +
@@ -30,51 +30,51 @@ public interface RoleDao extends BaseMapper<Role> {
     Page<Role> findPage(String queryString);
 
     @Select("select *" +
-            "        from t_role" +
+            "        from h_role" +
             "        where name = #{name}" +
             "           or keyword = #{keyword}")
     List<Role> findByName2Kd(@Param("name") String name, @Param("keyword") String keyword);
 
-    @Insert("insert into t_role_permission" +
+    @Insert("insert into h_role_permission" +
             "        values (#{roleId}, #{permissionId})")
     void addPermissionAndRole(@Param("roleId") Integer roleId, @Param("permissionId") Integer permissionId);
 
-    @Insert("insert into t_role_menu" +
+    @Insert("insert into h_role_menu" +
             "        values (#{roleId}, #{menuId})")
     void addMenuAndRole(@Param("roleId") Integer roleId, @Param("menuId") Integer menuId);
 
     @Select("select permission_id" +
-            "        from t_role_permission" +
+            "        from h_role_permission" +
             "        where role_id = #{rId}")
     List<Integer> findPermissionIdByrid(Integer rId);
 
     @Select("select menu_id" +
-            "        from t_role_menu" +
+            "        from h_role_menu" +
             "        where role_id = #{rId}")
     List<Integer> findMenuIdByrid(Integer rId);
 
     @Delete("delete" +
-            "        from t_role_permission" +
+            "        from h_role_permission" +
             "        where role_id = #{roleId}")
     void deleteConnection4PermissionByrid(Integer roleId);
 
     @Delete("delete" +
-            "        from t_role_menu" +
+            "        from h_role_menu" +
             "        where role_id = #{roleId}")
     void deleteConnection4MenuByrid(Integer roleId);
 
     @Delete("delete" +
-            "        from t_user_role" +
+            "        from h_user_role" +
             "        where role_id = #{roleId}")
     void deleteConnection4UserByrid(Integer id);
 
     @Select("select *" +
-            "        from t_role" +
-            "        where id in (select role_id from t_role_menu where menu_id = #{id})")
+            "        from h_role" +
+            "        where id in (select role_id from h_role_menu where menu_id = #{id})")
     List<Role> findRoleBymid(Integer id);
 
     @Select("select *" +
-            "        from t_menu" +
-            "        where id in (select menu_id from t_role_menu where role_id = #{roleId})")
+            "        from h_menu" +
+            "        where id in (select menu_id from h_role_menu where role_id = #{roleId})")
     LinkedHashSet<Menu> findMenuByRoleId(Integer roleId);
 }

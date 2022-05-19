@@ -9,16 +9,16 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface AddressDao extends BaseMapper<Address> {
 
-    @Select("select * from t_address")
+    @Select("select * from h_address")
     Page<Address> findPage();
 
-    @Select("select t_address.id, t_address.addressName, t_address.telephone, t_address.lngAndLat, t_address.img, t_address.map, t_address.detailaddress" +
-            " from t_address where addressName like #{queryString} or detailaddress like #{queryString}")
+    @Select("select h_address.id, h_address.addressName, h_address.telephone, h_address.lngAndLat, h_address.img, h_address.map, h_address.detailaddress" +
+            " from h_address where addressName like #{queryString} or detailaddress like #{queryString}")
     Page<Address> findByCondition(String queryString);
 
     @Select("SELECT  a.addressName,a.detailaddress " +
-            "FROM  ( SELECT * FROM t_order WHERE t_order.member_id = #{id} ) o " +
-            "INNER JOIN t_address a ON o.address_id = a.id")
+            "FROM  ( SELECT * FROM h_order WHERE h_order.member_id = #{id} ) o " +
+            "INNER JOIN h_address a ON o.address_id = a.id")
     Address getByMemberId(Integer id);
 
 

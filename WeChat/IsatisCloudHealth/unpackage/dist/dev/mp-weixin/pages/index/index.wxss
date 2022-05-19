@@ -1,0 +1,38 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* .section {
+    display: flex;
+    justify-content: space-around;
+} */
+.swiper_image {
+    display: block;
+    margin: auto;
+    width: 70%;
+    height: 90%;
+}
+

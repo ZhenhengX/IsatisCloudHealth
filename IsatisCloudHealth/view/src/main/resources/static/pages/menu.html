@@ -35,8 +35,6 @@
             position: relative;
             text-align: left;
         }
-
-
     </style>
 </head>
 <body class="hold-transition">
@@ -63,10 +61,7 @@
                       style="width: 100%;margin-bottom: 20px;">
                 <el-table-column align="center" label="菜单名称" prop="name"></el-table-column>
                 <el-table-column align="center" label="访问路径" prop="linkUrl"></el-table-column>
-                <el-table-column align="center" label="路径级别" prop="priority"></el-table-column>
-
-                <el-table-column align="center" label="自关联Id" prop="parentMenuId"></el-table-column>
-
+                <el-table-column align="center" label="路径级别" prop="path"></el-table-column>
                 <el-table-column align="center" label="菜单级别" prop="level"></el-table-column>
                 <el-table-column align="center" label="操作">
                     <template slot-scope="scope">
@@ -113,7 +108,7 @@
                             <el-row>
                                 <el-col :span="12">
                                     <el-form-item label="路径级别" prop="path">
-                                        <el-input v-model="formData.path" placeholder="格式：1 一级路径 /1-1 二级路径"/>
+                                        <el-input v-model="formData.path" placeholder="格式：1 一级路径 1-1 二级路径"/>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="12">
@@ -124,8 +119,8 @@
                             </el-row>
                             <el-row>
                                 <el-col :span="12">
-                                    <el-form-item label="自关联Id" prop="parentMenuId">
-                                        <el-select v-model="formData.parentMenuId" placeholder="请选择关联的菜单">
+                                    <el-form-item label="上级菜单" prop="parentMenuId">
+                                        <el-select v-model="formData.parentMenuId" placeholder="请选择上级菜单">
                                             <el-option label="一级菜单" value="">
                                             </el-option>
                                             <el-option v-for="item in menus"
@@ -195,8 +190,8 @@
                             </el-row>
                             <el-row>
                                 <el-col :span="12">
-                                    <el-form-item label="自关联Id" prop="parentMenuId">
-                                        <el-select v-model="editFormData.parentMenuId" placeholder="请选择关联的菜单">
+                                    <el-form-item label="上级菜单" prop="parentMenuId">
+                                        <el-select v-model="editFormData.parentMenuId" placeholder="请选择上级菜单">
                                             <el-option label="一级菜单" value="">
                                             </el-option>
                                             <el-option v-for="item in menus"
@@ -275,7 +270,7 @@
                 linkUrl: [{required: false, message: '访问路径为必填项', trigger: 'blur'}],
                 path: [{required: true, message: '路径级别为必填项', trigger: 'blur'}],
                 priority: [{required: true, message: '优先级为必填项', trigger: 'blur'}],
-                parentMenuId: [{required: false, message: '自关联Id为必填项', trigger: 'blur'}],
+                parentMenuId: [{required: false, message: '上级菜单为必填项', trigger: 'blur'}],
                 level: [{required: true, message: '菜单级别为必填项', trigger: 'blur'}],
             },
             openEdit: false,//一个标志变量,标记为是否打开编辑表单
@@ -289,7 +284,6 @@
             axios.post("/permissionserver/findAllPermission").then((res) => {
                 this.permission = res.data;
             });
-
             this.findPage();
         },
         methods: {
@@ -311,7 +305,6 @@
             },
             // 重置表单
             resetForm() {
-
                 this.formData = {};
             },
             // 弹出添加窗口
@@ -331,7 +324,6 @@
 
             //添加
             handleAdd: function () {
-                /*console.log(this.formData);*/
                 //在进行添加的时候先对，表单进行校验，防止因为不填写数据，直接保存的空数据
                 this.$refs['dataAddForm'].validate((valid) => {
                     if (valid) {

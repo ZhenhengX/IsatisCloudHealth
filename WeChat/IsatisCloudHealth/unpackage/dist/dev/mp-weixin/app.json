@@ -1,0 +1,40 @@
+{
+    "pages": [
+        "pages/index/index",
+        "pages/setmeal/setmeal",
+        "pages/checkRecord/checkRecord",
+        "pages/improve/improve",
+        "pages/orderList/orderList",
+        "pages/myInfo/myInfo",
+        "pages/setmeal/setmeal_detail/setmeal_detail",
+        "pages/setmeal/setmeal_detail/orderInfo/orderInfo",
+        "pages/setmeal/setmeal_detail/orderInfo/orderSuccess/orderSuccess"
+    ],
+    "subPackages": [],
+    "window": {
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "菘蓝云健康",
+        "navigationBarBackgroundColor": "#F8F8F8",
+        "backgroundColor": "#F8F8F8"
+    },
+    "tabBar": {
+        "selectedColor": "#00aaff",
+        "list": [
+            {
+                "pagePath": "pages/index/index",
+                "text": "首页",
+                "iconPath": "static/c1.png",
+                "selectedIconPath": "static/c2.png"
+            },
+            {
+                "pagePath": "pages/myInfo/myInfo",
+                "text": "我的",
+                "iconPath": "./static/c9.png",
+                "selectedIconPath": "./static/c8.png"
+            }
+        ]
+    },
+    "permission": {},
+    "usingComponents": {},
+    "sitemapLocation": "sitemap.json"
+}

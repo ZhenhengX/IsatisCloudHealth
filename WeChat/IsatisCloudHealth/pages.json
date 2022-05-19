@@ -1,0 +1,100 @@
+{
+    "pages": [{
+            "path": "pages/login/login",
+            "style": {
+                "navigationBarTitleText": "登录",
+                "enablePullDownRefresh": false
+            }
+        }, {
+            "path": "pages/login/register/register",
+            "style": {
+                "navigationBarTitleText": "注册",
+                "enablePullDownRefresh": false
+            }
+        },
+        {
+            "path": "pages/index/index",
+            "style": {
+                "navigationBarTitleText": "菘蓝云健康"
+            }
+        }, {
+            "path": "pages/setmeal/setmeal",
+            "style": {
+                "navigationBarTitleText": "体检预约"
+            }
+        }, {
+            "path": "pages/setmeal/setmeal_detail/setmeal_detail",
+            "style": {
+                "navigationBarTitleText": "套餐详情",
+                "enablePullDownRefresh": false
+            }
+        }, {
+            "path": "pages/setmeal/setmeal_detail/orderInfo/orderInfo",
+            "style": {
+                "navigationBarTitleText": "预约详情",
+                "enablePullDownRefresh": false
+            }
+        }, {
+            "path": "pages/setmeal/setmeal_detail/orderInfo/orderSuccess/orderSuccess",
+            "style": {
+                "navigationBarTitleText": "预约成功",
+                "enablePullDownRefresh": false
+            }
+        }, {
+            "path": "pages/orderList/orderList",
+            "style": {
+                "navigationBarTitleText": "预约记录"
+            }
+        }, {
+            "path": "pages/checkRecord/checkRecord",
+            "style": {
+                "navigationBarTitleText": "体检报告"
+            }
+        }, {
+            "path": "pages/improve/improve",
+            "style": {
+                "navigationBarTitleText": "改善方案"
+            }
+        }, {
+            "path": "pages/myInfo/myInfo",
+            "style": {
+                "navigationBarTitleText": "我的",
+                "enablePullDownRefresh": false
+            }
+        }
+        ,{
+            "path" : "pages/improve/improvePlan/improvePlan",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "方案详情",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+    "globalStyle": {
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "菘蓝云健康",
+        "navigationBarBackgroundColor": "#F8F8F8",
+        "backgroundColor": "#F8F8F8",
+        "app-plus": {
+            "background": "#efeff4"
+        }
+    },
+    "tabBar": {
+        "selectedColor": "#00aaff",
+        "list": [{
+                "pagePath": "pages/index/index",
+                "text": "首页",
+                "iconPath": "static/c1.png",
+                "selectedIconPath": "static/c2.png"
+            },
+            {
+                "pagePath": "pages/myInfo/myInfo",
+                "text": "我的",
+                "iconPath": "./static/c9.png",
+                "selectedIconPath": "./static/c8.png"
+            }
+        ]
+    }
+}

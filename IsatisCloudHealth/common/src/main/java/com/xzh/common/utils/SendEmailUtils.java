@@ -12,29 +12,21 @@ public class SendEmailUtils {//发送邮件的工具类
     // 发件人的邮箱账号和密码
     // PS: 某些邮箱服务器为了增加邮箱本身密码的安全性，给 SMTP 客户端设置了独立密码（有的邮箱称为"授权码"）,
     //     对于开启了独立密码的邮箱, 这里的邮箱密码必需使用这个独立密码（授权码）。
-    public static String myEmailAccount = "zf18956101526@163.com";
+    public static String myEmailAccount = "2514769607@qq.com";
     public static String myEmailPassword = "DDKDDMVVXJOOYSHA";//授权码
 
     // 发件人邮箱的 SMTP 服务器地址, 必须准确, 不同邮件服务器地址不同, 一般格式为: smtp.xxx.com
-    // 网易163邮箱的 SMTP 服务器地址为: smtp.163.com
-    public static String myEmailSMTPHost = "smtp.163.com";
+    public static String myEmailSMTPHost = "smtp.qq.com";
 
     /**
      * 创建一封修改邮箱的时候发送验证码的邮件
-     *
-     * @param session      和服务器交互的会话
-     * @param sendMail     发件人邮箱
-     * @param receiveMail  收件人邮箱
-     * @param validateCode 验证码
-     * @return
-     * @throws Exception
      */
     public static MimeMessage createMimeMessage(Session session, String sendMail, String receiveMail, String validateCode) throws Exception {
         // 1. 创建一封邮件
         MimeMessage message = new MimeMessage(session);
 
         // 2. From: 发件人
-        message.setFrom(new InternetAddress(sendMail, "飞猪健康", "UTF-8"));
+        message.setFrom(new InternetAddress(sendMail, "菘蓝云健康", "UTF-8"));
 
         // 3. To: 收件人（可以增加多个收件人、抄送、密送）
         message.setRecipient(MimeMessage.RecipientType.TO, new InternetAddress(receiveMail, receiveMail, "UTF-8"));
@@ -56,10 +48,6 @@ public class SendEmailUtils {//发送邮件的工具类
 
     /**
      * 向指定邮箱发送验证码
-     *
-     * @param receiveMailAccount 收件人邮箱
-     * @param validateCode       验证码
-     * @throws Exception
      */
     public static void sendEmail4ValidateCode(String receiveMailAccount, String validateCode) throws Exception {
         // 1. 创建参数配置, 用于连接邮件服务器的参数配置

@@ -22,4 +22,7 @@ public class SetmealDTO implements Serializable {
         this.setmeal = setmeal;
         this.checkgroupIds = checkgroupIds;
     }
+
+    public SetmealDTO() {
+    }
 }

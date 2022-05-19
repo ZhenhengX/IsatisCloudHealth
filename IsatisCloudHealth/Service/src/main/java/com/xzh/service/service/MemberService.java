@@ -13,6 +13,9 @@ public interface MemberService extends IService<Member> {
     //根据手机号查询会员
     Member findByTelephone(String telephone);
 
+    // 根据手机号密码查询会员（登录用）
+    Member findByTelephoneAndPassword(String telephone, String password);
+
     //新增会员
     void add(Member member);
 

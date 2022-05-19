@@ -16,7 +16,7 @@ import java.util.Map;
 public interface OrderDao extends BaseMapper<Order> {
 
     @Select("<script>" +
-            "select * from t_order" +
+            "select * from h_order" +
             "        <where>" +
             "            <if test=\"id != null\">" +
             "                and id = #{id}" +
@@ -24,8 +24,11 @@ public interface OrderDao extends BaseMapper<Order> {
             "            <if test=\"memberId != null\">" +
             "                and member_id = #{memberId}" +
             "            </if>" +
+            "            <if test=\"idCard != null\">" +
+            "                and id_card = #{idCard}" +
+            "            </if>" +
             "            <if test=\"orderDate != null\">" +
-            "                and orderDate = #{orderDate}" +
+            "                and orderDate = #{orderDate,jdbcType=DATE}" +
             "            </if>" +
             "            <if test=\"orderType != null\">" +
             "                and orderType = #{orderType}" +
@@ -40,122 +43,127 @@ public interface OrderDao extends BaseMapper<Order> {
             "</script>")
     List<Order> findByCondition(Order order);
 
-    @Select("select m.name member ,s.name setmeal,o.orderDate orderDate,o.orderType orderType" +
-            "        from" +
-            "        t_order o," +
-            "        t_member m," +
-            "        t_setmeal s" +
-            "        where o.member_id=m.id and o.setmeal_id=s.id and o.id=#{id}")
+    @Select("SELECT  " +
+            " o.order_name AS member,  " +
+            " s.NAME AS setmeal,  " +
+            " o.orderDate AS orderDate,  " +
+            " o.orderType AS orderType   " +
+            "FROM  " +
+            " h_order o,  " +
+            " h_setmeal s   " +
+            "WHERE  " +
+            " o.setmeal_id = s.id   " +
+            " AND o.id = #{id}")
     Map findById4Detail(Integer id);
 
-    @Select("select count(id) from t_order where orderDate = #{date}")
+    @Select("select count(id) from h_order where orderDate =  #{date,jdbcType=DATE}")
     Integer findOrderCountByDate(String date);
 
-    @Select("select count(id) from t_order where orderDate >= #{date}")
+    @Select("select count(id) from h_order where orderDate >=  #{date,jdbcType=DATE}")
     Integer findOrderCountAfterDate(String date);
 
-    @Select("select count(id) from t_order where orderDate = #{date} and orderStatus = '已到诊'")
+    @Select("select count(id) from h_order where orderDate =  #{date,jdbcType=DATE} and orderStatus = '已到诊'")
     Integer findVisitsCountByDate(String date);
 
-    @Select("select count(id) from t_order where orderDate >= #{date} and orderStatus = '已到诊'")
+    @Select("select count(id) from h_order where orderDate >=  #{date,jdbcType=DATE} and orderStatus = '已到诊'")
     Integer findVisitsCountAfterDate(String date);
 
-    @Select("select s.name, count(o.id) setmeal_count, count(o.id) / (select count(id) from t_order) proportion" +
-            "        from t_order o" +
-            "                 inner join t_setmeal s on s.id = o.setmeal_id" +
+    @Select("select s.name, count(o.id) setmeal_count, count(o.id) / (select count(id) from h_order) proportion" +
+            "        from h_order o" +
+            "                 inner join h_setmeal s on s.id = o.setmeal_id" +
             "        group by o.setmeal_id" +
             "        order by setmeal_count desc" +
             "        limit 0,4")
     List<Map> findHotSetmeal();
 
-    @Select("SELECT * FROM t_order" +
+    @Select("SELECT * FROM h_order" +
             "        WHERE" +
             "        member_id=#{memberId}" +
             "        GROUP BY" +
             "        orderStatus")
     List<Order> findByMemberIdWithCondition(Integer memberId);
 
-    @Select("select * from t_order where member_id=#{id}")
+    @Select("select * from h_order where member_id=#{id}")
     List<Order> findOrderById(Integer id);
 
     @Select("SELECT" +
-            "        t_order.id AS orderId," +
-            "        t_order.orderDate AS orderDate," +
-            "        t_order.orderStatus AS orderStatus," +
-            "        t_setmeal.id AS setmealId," +
-            "        t_setmeal.img AS setmealImg," +
-            "        t_setmeal.name AS setmealName," +
-            "        t_setmeal.remark AS setmealRemark," +
-            "        t_setmeal.sex AS setmealSex," +
-            "        t_setmeal.age AS setmealAge" +
+            "        h_order.id AS orderId," +
+            "        h_order.orderDate AS orderDate," +
+            "        h_order.orderStatus AS orderStatus," +
+            "        h_setmeal.id AS setmealId," +
+            "        h_setmeal.img AS setmealImg," +
+            "        h_setmeal.name AS setmealName," +
+            "        h_setmeal.remark AS setmealRemark," +
+            "        h_setmeal.sex AS setmealSex," +
+            "        h_setmeal.age AS setmealAge" +
             "        FROM" +
-            "        t_order" +
-            "        INNER JOIN t_setmeal ON t_order.setmeal_id = t_setmeal.id" +
+            "        h_order" +
+            "        INNER JOIN h_setmeal ON h_order.setmeal_id = h_setmeal.id" +
             "        WHERE" +
-            "        t_order.member_id = #{memberId}" +
+            "        h_order.member_id = #{memberId}" +
             "        GROUP BY" +
-            "        t_order.orderStatus")
+            "        h_order.orderStatus")
     List<Map> findAll4OrderAndSetmeal(Integer memberId);
 
     @Select("SELECT" +
-            "        t_order.id AS orderId," +
-            "        t_order.orderDate AS orderDate," +
-            "        t_order.orderStatus AS orderStatus," +
-            "        t_setmeal.id AS setmealId," +
-            "        t_setmeal.img AS setmealImg," +
-            "        t_setmeal.name AS setmealName," +
-            "        t_setmeal.remark AS setmealRemark," +
-            "        t_setmeal.sex AS setmealSex," +
-            "        t_setmeal.age AS setmealAge" +
+            "        h_order.id AS orderId," +
+            "        h_order.orderDate AS orderDate," +
+            "        h_order.orderStatus AS orderStatus," +
+            "        h_setmeal.id AS setmealId," +
+            "        h_setmeal.img AS setmealImg," +
+            "        h_setmeal.name AS setmealName," +
+            "        h_setmeal.remark AS setmealRemark," +
+            "        h_setmeal.sex AS setmealSex," +
+            "        h_setmeal.age AS setmealAge" +
             "        FROM" +
-            "        t_order" +
-            "        INNER JOIN t_setmeal ON t_order.setmeal_id = t_setmeal.id" +
+            "        h_order" +
+            "        INNER JOIN h_setmeal ON h_order.setmeal_id = h_setmeal.id" +
             "        WHERE" +
-            "        t_order.member_id = #{memberId} AND" +
-            "        t_order.orderDate BETWEEN #{startDate} AND #{endDate} AND" +
-            "        t_setmeal.name LIKE #{setmealName}" +
+            "        h_order.member_id = #{memberId} AND" +
+            "        h_order.orderDate BETWEEN #{startDate,jdbcType=DATE} AND #{endDate,jdbcType=DATE} AND" +
+            "        h_setmeal.name LIKE #{setmealName}" +
             "        GROUP BY" +
-            "        t_order.orderStatus")
+            "        h_order.orderStatus")
     List<Map> findSetmealByIdAndDate(@Param("memberId") Integer memberId, @Param("startDate") String startDate, @Param("endDate") String endDate, @Param("setmealName") String setmealName);
 
     @Select("SELECT" +
-            "        t_order.id AS orderId," +
-            "        t_order.orderDate AS orderDate," +
-            "        t_order.orderStatus AS orderStatus," +
-            "        t_setmeal.id AS setmealId," +
-            "        t_setmeal.img AS setmealImg," +
-            "        t_setmeal.name AS setmealName," +
-            "        t_setmeal.remark AS setmealRemark," +
-            "        t_setmeal.sex AS setmealSex," +
-            "        t_setmeal.age AS setmealAge" +
+            "        h_order.id AS orderId," +
+            "        h_order.orderDate AS orderDate," +
+            "        h_order.orderStatus AS orderStatus," +
+            "        h_setmeal.id AS setmealId," +
+            "        h_setmeal.img AS setmealImg," +
+            "        h_setmeal.name AS setmealName," +
+            "        h_setmeal.remark AS setmealRemark," +
+            "        h_setmeal.sex AS setmealSex," +
+            "        h_setmeal.age AS setmealAge" +
             "        FROM" +
-            "        t_order" +
-            "        INNER JOIN t_setmeal ON t_order.setmeal_id = t_setmeal.id" +
+            "        h_order" +
+            "        INNER JOIN h_setmeal ON h_order.setmeal_id = h_setmeal.id" +
             "        WHERE" +
-            "        t_order.member_id = #{memberId} AND" +
-            "        t_order.orderDate BETWEEN #{startDate} AND #{endDate}" +
+            "        h_order.member_id = #{memberId} AND" +
+            "        h_order.orderDate BETWEEN #{startDate,jdbcType=DATE} AND #{endDate,jdbcType=DATE}" +
             "        GROUP BY" +
-            "        t_order.orderStatus")
+            "        h_order.orderStatus")
     List<Map> findSetmealByIdAndDateWithoutName(@Param("memberId") Integer memberId, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
     @Select("SELECT" +
-            "        t_order.id AS orderId," +
-            "        t_order.healthName AS healthName," +
-            "        t_order.suggestion AS suggestion," +
-            "        t_order.sport AS sport," +
-            "        t_order.food AS food," +
-            "        t_order.orderDate AS orderDate," +
-            "        t_member.name AS name," +
-            "        t_member.remark AS remark," +
-            "        t_member.sex AS sex," +
-            "        t_setmeal.age AS age," +
-            "        t_setmeal.name AS setmealName" +
+            "        h_order.id AS orderId," +
+            "        h_order.healthName AS healthName," +
+            "        h_order.suggestion AS suggestion," +
+            "        h_order.sport AS sport," +
+            "        h_order.food AS food," +
+            "        h_order.orderDate AS orderDate," +
+            "        h_member.name AS name," +
+            "        h_member.remark AS remark," +
+            "        h_member.sex AS sex," +
+            "        h_setmeal.age AS age," +
+            "        h_setmeal.name AS setmealName" +
             "        FROM" +
-            "        t_order" +
-            "        INNER JOIN t_member ON t_order.member_id = t_member.id" +
-            "        INNER JOIN t_setmeal ON t_order.setmeal_id = t_setmeal.id" +
+            "        h_order" +
+            "        INNER JOIN h_member ON h_order.member_id = h_member.id" +
+            "        INNER JOIN h_setmeal ON h_order.setmeal_id = h_setmeal.id" +
             "        WHERE" +
-            "        t_order.id =#{orderId}")
+            "        h_order.id =#{orderId}")
     Map findAllDataByOrderId(Integer orderId);
 
     //分页查询
@@ -169,7 +177,7 @@ public interface OrderDao extends BaseMapper<Order> {
             "        o.`orderStatus`," +
             "        s.`name` setmealName" +
             "        FROM" +
-            "        t_member m , t_order o , t_setmeal s" +
+            "        h_member m , h_order o , h_setmeal s" +
             "        WHERE" +
             "        o.`setmeal_id` = s.`id`" +
             "        AND" +
@@ -179,7 +187,7 @@ public interface OrderDao extends BaseMapper<Order> {
             "            or m.phoneNumber like concat(\"%\",#{queryString},\"%\"))" +
             "        </if>" +
             "        <if test=\"startDate != null and endDate != null\">" +
-            "            and (o.orderDate between #{startDate} and #{endDate})" +
+            "            and (o.orderDate between #{startDate,jdbcType=DATE} and #{endDate,jdbcType=DATE})" +
             "        </if>" +
             "        <if test=\"queryOrderType != null\">" +
             "            and o.orderType = #{queryOrderType}" +
@@ -200,7 +208,7 @@ public interface OrderDao extends BaseMapper<Order> {
             "        o.`orderStatus`," +
             "        s.`name` setmealName" +
             "        FROM" +
-            "        t_member m , t_order o , t_setmeal s" +
+            "        h_member m , h_order o , h_setmeal s" +
             "        WHERE" +
             "        o.`setmeal_id` = s.`id`" +
             "        AND" +
@@ -210,24 +218,32 @@ public interface OrderDao extends BaseMapper<Order> {
     Map findOrderById1(Integer id);
 
     //通过订单id查询套餐id
-    @Select("select setmeal_id from t_order where id = #{id}")
+    @Select("select setmeal_id from h_order where id = #{id}")
     List<Integer> findSetmealIdsByOrderId(Integer id);
 
     //查询就诊状态
-    @Select("select * from t_order where id = #{id}")
+    @Select("select * from h_order where id = #{id}")
     Order findOrderStatesById(Integer id);
 
     //改为未到诊
-    @Update("update t_order set orderStatus = '未到诊' where id = #{id}")
+    @Update("update h_order set orderStatus = '未到诊' where id = #{id}")
     void editStatus(Integer id);
 
     //改为已到诊
-    @Update("update t_order set orderStatus='已到诊' where id = #{id}")
+    @Update("update h_order set orderStatus='已到诊' where id = #{id}")
     void editStatusTo(Integer id);
 
-    @Select("SELECT t_order.food,t_order.sport,t_order.suggestion,t_order.healthName FROM t_order WHERE id =#{id};")
+    @Select("SELECT h_order.food,h_order.sport,h_order.suggestion,h_order.healthName FROM h_order WHERE id =#{id};")
     Order findHealtMessageById(Integer id);
 
-    @Update("update t_order set orderStatus=#{orderStatus} where id = #{id}")
+    @Update("update h_order set orderStatus=#{orderStatus} where id = #{id}")
     void update1(@Param("orderStatus") String orderStatus, @Param("id") Integer orderId);
+
+    @Select("select o.id as orderId, o.orderDate as orderDate, o.order_name orderName, " +
+            "s.name as setMealName, s.img as img " +
+            "from h_order o left join h_setmeal s on s.id = o.setmeal_id " +
+            "where o.member_id = #{id} " +
+            "order by o.orderDate DESC")
+    List<Map<String, Object>> findOrderByMemberId(Integer id);
+
 }

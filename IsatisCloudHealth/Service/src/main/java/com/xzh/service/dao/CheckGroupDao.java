@@ -16,7 +16,7 @@ public interface CheckGroupDao extends BaseMapper<CheckGroup> {
 
     //分页、条件查询
     @Select("<script>" +
-            "select * from t_check_group" +
+            "select * from h_check_group" +
             "  <if test=\"queryString != null and queryString.length>0\">" +
             "    where code = #{queryString} or name = #{queryString} or helpCode = #{queryString}" +
             "  </if>" +
@@ -24,16 +24,16 @@ public interface CheckGroupDao extends BaseMapper<CheckGroup> {
     Page<CheckGroup> selectByCondition(String queryString);
 
     //新增关联关系
-    @Insert("insert into t_checkgroup_checkitem(checkgroup_id,checkitem_id) " +
+    @Insert("insert into h_checkgroup_checkitem(checkgroup_id,checkitem_id) " +
             "values (#{checkgroupId},#{checkitemId})")
     void setCheckGroupIdAndCheckItemId(Map map);
 
     //根据检查组id查询其所关联的检查项的id
-    @Select("select checkitem_id from t_checkgroup_checkitem where checkgroup_id=#{checkgroupId}")
+    @Select("select checkitem_id from h_checkgroup_checkitem where checkgroup_id=#{checkgroupId}")
     List<Integer> findCheckitemIdsByCheckgroupId(Integer checkgroupId);
 
     //清理关联关系
-    @Delete("delete from t_checkgroup_checkitem where checkgroup_id=#{groupId}")
+    @Delete("delete from h_checkgroup_checkitem where checkgroup_id=#{groupId}")
     void clear(Integer groupId);
 
 }

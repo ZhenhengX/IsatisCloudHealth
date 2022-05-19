@@ -15,4 +15,7 @@ public class CheckGroupDTO implements Serializable {
         this.checkGroup = checkGroup;
         this.checkitemIds = checkitemIds;
     }
+
+    public CheckGroupDTO() {
+    }
 }

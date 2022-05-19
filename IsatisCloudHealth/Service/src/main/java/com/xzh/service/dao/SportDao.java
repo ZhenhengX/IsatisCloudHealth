@@ -11,7 +11,7 @@ public interface SportDao extends BaseMapper<Sport> {
 
     @Select("<script>" +
             "select *" +
-            "        from t_sport" +
+            "        from h_sport" +
             "        <if test=\"queryString != null and queryString.length > 0\">" +
             "            where id like concat('%', #{queryString}, '%')" +
             "               or sportname like concat('%', #{queryString}, '%')" +
@@ -19,7 +19,7 @@ public interface SportDao extends BaseMapper<Sport> {
             "</script>")
     Page<Sport> selectByCondition(String queryString);
 
-    @Select("select count(id) from t_sport where sportname = #{sportname}")
+    @Select("select count(id) from h_sport where sportname = #{sportname}")
     int findCountSportName(Sport sport);
 
 }

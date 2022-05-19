@@ -14,7 +14,7 @@ public interface MenuService extends IService<Menu> {
 
     PageResult findPage(QueryPageBean queryPageBean);
 
-    List<Map<String, Integer>> findAllMenu();
+    List<Map<String, Object>> findAllMenu();
 
     List<Menu> findByNameAndLkurl(String name, String linkUrl);
 

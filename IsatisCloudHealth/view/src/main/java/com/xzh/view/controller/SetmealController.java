@@ -1,13 +1,12 @@
 package com.xzh.view.controller;
 
 import com.xzh.common.constant.MessageConstant;
-import com.xzh.common.constant.RedisConstant;
 import com.xzh.common.dto.SetmealDTO;
 import com.xzh.common.entity.PageResult;
 import com.xzh.common.entity.QueryPageBean;
 import com.xzh.common.entity.Result;
 import com.xzh.common.pojo.Setmeal;
-import com.xzh.common.utils.QiniuUtils;
+import com.xzh.common.utils.AliyunOssUtils;
 import com.xzh.view.openFeign.SetmealFeign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import redis.clients.jedis.JedisPool;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,11 +23,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/setmeal")
 public class SetmealController {
+
     @Autowired
     private SetmealFeign setmealService;
-    //使用JedisPool操作Redis服务
-    @Autowired
-    private JedisPool jedisPool;
 
     @RequestMapping("upload")
     public Result upload(@RequestParam("imgFile") MultipartFile imgFile) {
@@ -38,10 +34,7 @@ public class SetmealController {
         String pn = originalFilename.substring(index - 1);//.jpg
         String fileName = UUID.randomUUID() + pn;
         try {
-            //将图片存入七牛云
-            QiniuUtils.upload2Qiniu(imgFile.getBytes(), fileName);
-            //将图片上传到七牛云的同时将图片名称存入Redis大集合中
-            jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_RESOURCES, fileName);
+            AliyunOssUtils.upload(imgFile.getBytes(), fileName);
         } catch (IOException e) {
             e.printStackTrace();
             return new Result(false, MessageConstant.PIC_UPLOAD_FAIL);

@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Select;
 public interface BookingDao {
     //分页查询预约信息
     @Select("SELECT m.`name` memberName, m.`phoneNumber`, o.id orderId, o.`orderDate`, o.`orderType`, o.`orderStatus`, s.`name` setmealName" +
-            "    FROM t_member m, t_order o, t_setmeal s" +
+            "    FROM h_member m, h_order o, h_setmeal s" +
             "    WHERE o.`setmeal_id` = s.`id` AND m.`id` = o.`member_id`")
     Page<Booking> findPage(String queryString);
 }

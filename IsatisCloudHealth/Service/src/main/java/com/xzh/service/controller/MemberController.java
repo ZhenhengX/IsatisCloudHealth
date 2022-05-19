@@ -24,6 +24,12 @@ public class MemberController {
         return memberService.findByTelephone(telephone);
     }
 
+    // 根据手机号密码查询会员（登录用）
+    @GetMapping("findByTelephoneAndPassword/{telephone}/{password}")
+    public Member findByTelephoneAndPassword(@PathVariable String telephone, @PathVariable String password) {
+        return memberService.findByTelephoneAndPassword(telephone, password);
+    }
+
     //新增会员
     @PostMapping("add")
     public void add(@RequestBody Member member) {

@@ -34,8 +34,7 @@ public class DateUtils {
             return null;
         }
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        Date date = sdf.parse(dateString);
-        return date;
+        return sdf.parse(dateString);
     }
 
     /**
@@ -43,9 +42,8 @@ public class DateUtils {
      *
      * @param date Date类型信息
      * @return 字符串时间
-     * @throws Exception 抛出异常
      */
-    public static String parseDate2String(Date date) throws Exception {
+    public static String parseDate2String(Date date) {
         if (date == null) {
             return null;
         }
@@ -58,15 +56,13 @@ public class DateUtils {
      * @param date    Date类型信息
      * @param pattern 格式模板
      * @return 字符串时间
-     * @throws Exception 抛出异常
      */
-    public static String parseDate2String(Date date, String pattern) throws Exception {
+    public static String parseDate2String(Date date, String pattern) {
         if (date == null) {
             return null;
         }
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        String strDate = sdf.format(date);
-        return strDate;
+        return sdf.format(date);
     }
 
     /**
@@ -112,7 +108,6 @@ public class DateUtils {
      * @param minDate 开始时间
      * @param maxDate 结束时间
      * @return 月份列表
-     * @throws Exception
      */
     public static List<String> getMonthBetween(String minDate, String maxDate, String format) throws Exception {
         ArrayList<String> result = new ArrayList<>();
@@ -142,7 +137,6 @@ public class DateUtils {
      *
      * @param date 日期
      * @return 周索引
-     * @throws Exception
      */
     public static Integer getWeekOfYear(String date) throws Exception {
         Date useDate = parseString2Date(date);
@@ -156,7 +150,6 @@ public class DateUtils {
      *
      * @param year 年分
      * @return 周列表
-     * @throws Exception
      */
     public static Map<Integer, String> getWeeksOfYear(String year) throws Exception {
         Date useDate = parseString2Date(year, "yyyy");
@@ -178,7 +171,6 @@ public class DateUtils {
      * @param year 年分
      * @param week 周索引
      * @return 开始日期
-     * @throws Exception
      */
     public static Date getFirstDayOfWeek(int year, int week) throws Exception {
         Calendar c = new GregorianCalendar();
@@ -198,9 +190,8 @@ public class DateUtils {
      * @param year 年份
      * @param week 周索引
      * @return 结束日期
-     * @throws Exception
      */
-    public static Date getLastDayOfWeek(int year, int week) throws Exception {
+    public static Date getLastDayOfWeek(int year, int week) {
         Calendar c = new GregorianCalendar();
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, Calendar.JANUARY);

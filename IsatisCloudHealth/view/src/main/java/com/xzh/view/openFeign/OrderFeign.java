@@ -71,4 +71,15 @@ public interface OrderFeign {
     @PutMapping("statusEdit/{orderStatusId}/{orderId}")
     void statusEdit(@PathVariable("orderStatusId") Integer orderStatusId, @PathVariable("orderId") Integer orderId);
 
+    /**
+     * 根据orderId更新检查报告
+     */
+    @PutMapping("updateCheckReport/{orderId}")
+    Integer updateCheckReport(@PathVariable("orderId") Integer orderId, @RequestBody Map<String, Map<String, String>> checkReport);
+
+    /**
+     * 根据orderId查询检查报告
+     */
+    @GetMapping("findCheckReportByOrderId/{orderId}")
+    Map<String, Map<String, String>> findCheckReportByOrderId(@PathVariable("orderId") Integer orderId);
 }

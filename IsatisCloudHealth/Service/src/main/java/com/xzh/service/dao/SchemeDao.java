@@ -12,7 +12,7 @@ public interface SchemeDao extends BaseMapper<Scheme> {
 
     @Select("<script>" +
             "select *" +
-            "        from t_scheme" +
+            "        from h_scheme" +
             "        <if test=\"value != null and value.length > 0\">" +
             "            where title like concat('%', #{value}, '%')" +
             "               or people like concat('%', #{value}, '%')" +

@@ -12,6 +12,9 @@ public class RoleDTO implements Serializable {
     private Integer[] menuIds;
     private Role role;
 
+    public RoleDTO() {
+    }
+
     public RoleDTO(Integer[] permissionIds, Integer[] menuIds, Role role) {
         this.permissionIds = permissionIds;
         this.menuIds = menuIds;

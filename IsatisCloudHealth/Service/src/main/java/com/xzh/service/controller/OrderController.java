@@ -108,4 +108,32 @@ public class OrderController {
         orderService.statusEdit(orderStatusId, orderId);
     }
 
+    @GetMapping("findOrderByMemberId/{id}")
+    public List<Map<String, Object>> findOrderByMemberId(@PathVariable Integer id) {
+        return orderService.findOrderByMemberId(id);
+    }
+
+    /**
+     * 根据会员id查询预约信息
+     */
+    @GetMapping("findAllById/{id}")
+    public Order findAllById(@PathVariable Integer id) {
+        return orderService.getById(id);
+    }
+
+    /**
+     * 根据orderId更新检查报告
+     */
+    @PutMapping("updateCheckReport/{orderId}")
+    public Integer updateCheckReport(@PathVariable Integer orderId, @RequestBody Map<String, Map<String, String>> checkReport) {
+        return orderService.updateCheckReport(orderId, checkReport);
+    }
+
+    /**
+     * 根据orderId查询检查报告
+     */
+    @GetMapping("findCheckReportByOrderId/{orderId}")
+    public Map<String, Map<String, String>> findCheckReportByOrderId(@PathVariable Integer orderId) {
+        return orderService.findCheckReportByOrderId(orderId);
+    }
 }

@@ -24,7 +24,7 @@ public class MenuController {
     }
 
     @GetMapping("findAllMenu")
-    public List<Map<String, Integer>> findAllMenu() {
+    public List<Map<String, Object>> findAllMenu() {
         return menuService.findAllMenu();
     }
 
