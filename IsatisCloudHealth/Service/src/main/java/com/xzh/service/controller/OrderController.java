@@ -118,14 +118,14 @@ public class OrderController {
      */
     @GetMapping("findAllById/{id}")
     public Order findAllById(@PathVariable Integer id) {
-        return orderService.getById(id);
+        return orderService.findOrderAllById(id);
     }
 
     /**
      * 根据orderId更新检查报告
      */
     @PutMapping("updateCheckReport/{orderId}")
-    public Integer updateCheckReport(@PathVariable Integer orderId, @RequestBody Map<String, Map<String, String>> checkReport) {
+    public Integer updateCheckReport(@PathVariable Integer orderId, @RequestBody List<Map<String, String>> checkReport) {
         return orderService.updateCheckReport(orderId, checkReport);
     }
 
@@ -133,7 +133,7 @@ public class OrderController {
      * 根据orderId查询检查报告
      */
     @GetMapping("findCheckReportByOrderId/{orderId}")
-    public Map<String, Map<String, String>> findCheckReportByOrderId(@PathVariable Integer orderId) {
+    public List<Map<String, String>> findCheckReportByOrderId(@PathVariable Integer orderId) {
         return orderService.findCheckReportByOrderId(orderId);
     }
 }

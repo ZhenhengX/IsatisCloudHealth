@@ -3,14 +3,21 @@ server:
 spring:
   application:
     name: View
+  main:
+    allow-bean-definition-overriding: true
   cloud:
     nacos:
       discovery:
         username: nacos
         password: nacos
         server-addr: 127.0.0.1:8848
-  main:
-    allow-bean-definition-overriding: true
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: 'GMT+8'
+  mvc:
+    format:
+      date: yyyy-MM-dd
+
 logging:
   level:
     com.xzh.view: debug
@@ -18,7 +25,7 @@ feign:
   client:
     config:
       default:
-        loggerlevel: BASIC
+        loggerlevel: FULL
   # feign性能优化，开启httpclient连接池
   httpclient:
     enabled: true

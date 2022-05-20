@@ -9,8 +9,11 @@
     <meta content="菘蓝云健康" name="keywords">
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
     <!-- 引入样式 -->
-    <link href="plugins/elementui/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <link href="css/login.css" rel="stylesheet">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
 <body class="hold-transition skin-purple sidebar-mini">
 <div id="app">
@@ -21,12 +24,11 @@
                     <div class="logoInfo clearfix">
                         <em class="logo"></em>
                     </div>
-<!--                    <b>菘蓝云健康</b>-->
                 </div>
                 <div>
-                        <span class="svg-container svg-container_login">
-                          <span class="user"></span>
-                        </span>
+                    <span class="svg-container svg-container_login">
+                        <span class="user"></span>
+                    </span>
                     <input name="username" placeholder="请输入用户名" type="text"/>
                 </div>
                 <div>
@@ -41,7 +43,4 @@
     </div>
 </div>
 </body>
-<!-- 引入组件库 -->
-<script src="js/vue.js"></script>
-<script src="plugins/elementui/index.js"></script>
 </html>

@@ -107,7 +107,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     public Map<String, Object> getMemberAgeReport() {
-        List<Member> lists = memberService.list();
+        List<Member> lists = memberDao.selectList(null);
         List<Integer> ages = new ArrayList<>();
         Map<String, Object> result = new HashMap<>();
         int a = 0, b = 0, c = 0, d = 0, e = 0, f = 0;

@@ -64,10 +64,13 @@ public interface OrderService extends IService<Order> {
     /**
      * 根据orderId更新检查报告
      */
-    Integer updateCheckReport(Integer orderId, Map<String, Map<String, String>> checkReport);
+    Integer updateCheckReport(Integer orderId, List<Map<String, String>> checkReport);
 
     /**
      * 根据orderId查询检查报告
      */
-    Map<String, Map<String, String>> findCheckReportByOrderId(Integer orderId);
+    List<Map<String, String>> findCheckReportByOrderId(Integer orderId);
+
+
+    Order findOrderAllById(Integer id);
 }

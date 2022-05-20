@@ -18,6 +18,8 @@ import com.xzh.service.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -60,15 +62,24 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, Member> implements
         List<Integer> list = new ArrayList<>();
         if (months != null) {
             for (String month : months) {
-                month += ".31";
-                Integer count = memberDao.findMemberCountBeforeDate(month);
+                month += ".01";
+                Date date = null;
+                try {
+                    date = new SimpleDateFormat("yyyy.MM.dd").parse(month);
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(date);
+                    cal.roll(Calendar.DAY_OF_MONTH, -1);
+                    date = new SimpleDateFormat("yyyy-MM-dd").parse(new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Integer count = memberDao.findMemberCountBeforeDate(date);
                 list.add(count);
             }
         }
         return list;
     }
 
-    //========================================================================
     //分页查询
     @Override
     public PageResult findPage(QueryPageBean queryPageBean) {

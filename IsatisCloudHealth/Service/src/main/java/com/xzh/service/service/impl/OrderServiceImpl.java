@@ -204,14 +204,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, Order> implements Or
 
     //分页查询
     public PageResult findByPageAndCondition(Conditions conditions) {
-        System.out.println("-----------------");
-        System.out.println(conditions.toString());
-        System.out.println("-----------------");
         Integer currentPage = conditions.getCurrentPage();
         Integer pageSize = conditions.getPageSize();
         //查询规则
         String queryString = conditions.getQueryString();
-        System.out.println(queryString);
         Date[] queryDate = conditions.getQueryDate();
         String queryOrderStatus = conditions.getQueryOrderStatus();
         String queryOrderType = conditions.getQueryOrderType();
@@ -223,11 +219,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, Order> implements Or
             startDate = queryDate[0];
             endDate = queryDate[1];
         }
-        Page page = orderDao.findByPageAndCondition(queryString, startDate, endDate, queryOrderStatus, queryOrderType);
+        Page<Order> page = orderDao.findByPageAndCondition(queryString, startDate, endDate, queryOrderStatus, queryOrderType);
         //查询的总条数
         long total = page.getTotal();
         //查询的当前页的集合
-        List result = page.getResult();
+        List<Order> result = page.getResult();
         return new PageResult(total, result);
     }
 
@@ -357,15 +353,15 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, Order> implements Or
      */
     @Override
     public void statusEdit(Integer orderStatusId, Integer orderId) {
-        String orderStatus = null;
         if (orderStatusId == 0) {
-            orderStatus = "已到诊";
+            orderDao.update1("已到诊", orderId);
+        } else if (orderStatusId == 1) {
+            orderDao.update1("未到诊", orderId);
         }
-        orderDao.update1(orderStatus, orderId);
     }
 
     /**
-     * 根据会员id查询预约信息
+     * 根据memberId查询预约信息
      */
     public List<Map<String, Object>> findOrderByMemberId(Integer id) {
         return orderDao.findOrderByMemberId(id);
@@ -374,7 +370,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, Order> implements Or
     /**
      * 根据orderId更新检查报告
      */
-    public Integer updateCheckReport(Integer orderId, Map<String, Map<String, String>> checkReport) {
+    public Integer updateCheckReport(Integer orderId, List<Map<String, String>> checkReport) {
         Order order = new Order();
         order.setId(orderId);
         order.setCheckReport(checkReport);
@@ -384,8 +380,13 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, Order> implements Or
     /**
      * 根据orderId查询检查报告
      */
-    public Map<String, Map<String, String>> findCheckReportByOrderId(Integer orderId) {
+    public List<Map<String, String>> findCheckReportByOrderId(Integer orderId) {
         return orderDao.selectById(orderId).getCheckReport();
     }
 
+    public Order findOrderAllById(Integer id) {
+        Order order = orderDao.selectById(id);
+        order.setSetmealName(setmealService.getById(order.getSetmealId()).getName());
+        return order;
+    }
 }

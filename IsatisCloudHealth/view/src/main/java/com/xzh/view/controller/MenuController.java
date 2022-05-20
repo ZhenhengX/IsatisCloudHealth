@@ -103,8 +103,10 @@ public class MenuController {
                 boolean lflag;
                 if (oldMenu.getLinkUrl() != null && oldMenu.getLinkUrl().length() > 0) {
                     lflag = oldMenu.getLinkUrl().equals(menu.getLinkUrl());
-                } else {
+                } else if (menu.getLinkUrl() != null && menu.getLinkUrl().length() > 0) {
                     lflag = menu.getLinkUrl().equals(oldMenu.getLinkUrl());
+                } else {
+                    lflag = true;
                 }
                 return good(nflag, lflag, menu);
             }
@@ -115,7 +117,7 @@ public class MenuController {
         }
     }
 
-    //对菜单的名字与请求路径进行3次判断 分为3中情况
+    // 对菜单的名字与请求路径进行3次判断 分为3种情况
     private Result good(boolean nflag, boolean lflag, Menu menu) {
         Result result;
         if (nflag && lflag) {

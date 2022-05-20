@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: Service
+  main:
+    allow-bean-definition-overriding: true
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -21,6 +23,12 @@ spring:
       enabled: true
       # 启用热部署的目录
       additional-paths: src/main/java
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: 'GMT+8'
+  mvc:
+    format:
+      date: yyyy-MM-dd
 mybatis-plus:
   global-config:
     db-config:
@@ -35,7 +43,7 @@ feign:
   client:
     config:
       default:
-        loggerlevel: BASIC
+        loggerlevel: FULL
   # feign性能优化，开启httpclient连接池
   httpclient:
     enabled: true

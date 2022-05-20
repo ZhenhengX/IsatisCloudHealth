@@ -1,6 +1,6 @@
 <template>
     <view>
-        <uni-section title="改善建议" type="line">
+        <uni-section title="改善方案" type="line">
             <uni-list>
                 <uni-list-item
                     v-for="(order, index) in orderList"

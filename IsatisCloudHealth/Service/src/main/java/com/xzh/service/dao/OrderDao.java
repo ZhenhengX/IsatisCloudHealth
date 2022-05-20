@@ -169,22 +169,17 @@ public interface OrderDao extends BaseMapper<Order> {
     //分页查询
     @Select("<script>" +
             "SELECT" +
-            "        m.`name` memberName," +
-            "        m.`phoneNumber` ," +
-            "        o.`orderDate`," +
-            "        o.`id`," +
-            "        o.`orderType`," +
-            "        o.`orderStatus`," +
-            "        s.`name` setmealName" +
+            "        o.id as id, o.order_name as orderName, o.sex as sex, o.telephone as telephone, o.id_card as idCard, " +
+            "        o.orderDate as orderDate, o.orderType as orderType, o.orderStatus as orderStatus," +
+            "        o.setmeal_id as setmealId, o.food as food, o.sport as sport, o.healthName as healthName," +
+            "        o.suggestion as suggestion ,s.`name` as setmealName" +
             "        FROM" +
-            "        h_member m , h_order o , h_setmeal s" +
+            "        h_order o , h_setmeal s" +
             "        WHERE" +
             "        o.`setmeal_id` = s.`id`" +
-            "        AND" +
-            "        m.`id`=o.`member_id`" +
             "        <if test=\"queryString != null and queryString.length > 0\">" +
-            "            and (m.name like concat(\"%\",#{queryString},\"%\")" +
-            "            or m.phoneNumber like concat(\"%\",#{queryString},\"%\"))" +
+            "            and (o.order_name like concat(\"%\",#{queryString},\"%\")" +
+            "            or o.telephone like concat(\"%\",#{queryString},\"%\"))" +
             "        </if>" +
             "        <if test=\"startDate != null and endDate != null\">" +
             "            and (o.orderDate between #{startDate,jdbcType=DATE} and #{endDate,jdbcType=DATE})" +

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ public interface MemberDao extends BaseMapper<Member> {
 
     //查询指定月份之前会员总数
     @Select("select count(id) from h_member where regTime <= #{month,jdbcType=DATE}")
-    Integer findMemberCountBeforeDate(String month);
+    Integer findMemberCountBeforeDate(Date month);
 
     //获取会员总数
     @Select("select count(id) from h_member")

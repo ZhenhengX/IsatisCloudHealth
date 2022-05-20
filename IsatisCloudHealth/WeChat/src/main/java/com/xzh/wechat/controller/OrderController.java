@@ -47,8 +47,8 @@ public class OrderController {
     }
 
     @RequestMapping("/findOrderByMemberId/{id}")
-    public Result findOrderByMemberId(@PathVariable Integer id) {
-        return new Result(true, orderFeign.findOrderByMemberId(id));
+    public Result findOrderByMemberId(@PathVariable String id) {
+        return new Result(true, orderFeign.findOrderByMemberId(Integer.parseInt(id)));
     }
 
     @GetMapping("findAllById/{id}")
@@ -140,11 +140,10 @@ public class OrderController {
     /**
      * @param orderId 前端传来的orderId
      */
-    @RequestMapping("/findAllDataByOrderId")
-    public Result findAllDataByOrderId(Integer orderId) {
+    @RequestMapping("/findAllDataByOrderId/{orderId}")
+    public Result findAllDataByOrderId(@PathVariable Integer orderId) {
         try {
             Map dataMap = orderFeign.findAllDataByOrderId(orderId);
-
             //查询成功，向前端返回数据
             return new Result(true, "查询成功", dataMap);
         } catch (Exception e) {
@@ -159,6 +158,10 @@ public class OrderController {
      */
     @RequestMapping("findCheckReportByOrderId/{orderId}")
     public Result findCheckReportByOrderId(@PathVariable Integer orderId) {
-        return new Result(true, orderFeign.findCheckReportByOrderId(orderId));
+        List<Map<String, String>> checkReport = orderFeign.findCheckReportByOrderId(orderId);
+        if (checkReport != null && checkReport.size() > 0) {
+            return new Result(true, checkReport);
+        }
+        return new Result(false);
     }
 }

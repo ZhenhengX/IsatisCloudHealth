@@ -1,6 +1,6 @@
 <template>
     <view>
-        
+        {{member}}
     </view>
 </template>
 
@@ -8,8 +8,11 @@
     export default {
         data() {
             return {
-                
+                member: {}
             }
+        },
+        onLoad() {
+            this.member = uni.getStorageSync('member');
         },
         methods: {
             

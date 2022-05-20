@@ -11,7 +11,7 @@
                     :rightText="order.orderDate"
                     :showArrow="true"
                     link="navigateTo"
-                    :to="'' + order.orderId"
+                    :to="'checkReport/checkReport?orderId=' + order.orderId"
                 />
             </uni-list>
         </uni-section>

@@ -6,9 +6,7 @@ import com.xzh.common.entity.Result;
 import com.xzh.view.openFeign.BookingFeign;
 import com.xzh.view.openFeign.OrderFeign;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 后台预约管理 -后台预约信息管理
@@ -42,14 +40,14 @@ public class BookingController {
 
 
     /**
-     * 改变就诊状态 未就诊 可以改变状态 ，已就诊就不可以改变状态
+     * 改变就诊状态
      *
-     * @param orderStatusId 0:表示由未到诊 变成已到诊
+     * @param orderStatusId 0:已到诊 1: 未到诊
      * @param orderId       预约订单id值
      * @return 返回改变就诊状态的信息
      */
-    @RequestMapping("/statusEdit")
-    public Result statusEdit(Integer orderStatusId, Integer orderId) {
+    @PostMapping("/statusEdit/{orderStatusId}/{orderId}")
+    public Result statusEdit(@PathVariable Integer orderStatusId, @PathVariable Integer orderId) {
         try {
             orderService.statusEdit(orderStatusId, orderId);
             return new Result(true, "更改就诊状态成功");

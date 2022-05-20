@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,8 +93,8 @@ public class OrderController {
     }
 
     //修改预约状态
-    @RequestMapping("/statusEdit")
-    public Result statusEdit(Integer id) {
+    @RequestMapping("/statusEdit/{id}")
+    public Result statusEdit(@PathVariable Integer id) {
         try {
             orderService.statusEdit(id);
             return new Result(true, "修改成功");
@@ -105,21 +106,21 @@ public class OrderController {
 
     /**
      * <p>根据orderId查询套餐下所有的检查项和检查组的名称</p>
-     * 返回值形式 : {GroupName: {ItemName: "", ItemName: ""}}
      */
-    @RequestMapping("findAllCheckByStMealId/{setmealId}")
-    public Result findAllCheckByStMealId(@PathVariable Integer setmealId) {
-        Map<String, Map<String, String>> checkNames = new HashMap<>();
+    @RequestMapping("findAllCheckBySetMealId/{setmealId}")
+    public Result findAllCheckBySetMealId(@PathVariable Integer setmealId) {
+        List<Map<String, String>> checkReportNames = new ArrayList<>();
         List<CheckGroup> checkGroups = associationFeign.findCheckGroupsBySetMealId(setmealId);
         for (CheckGroup checkGroup : checkGroups) {
             List<CheckItem> checkItems = associationFeign.findCheckItemsByCheckGroupId(checkGroup.getId());
             Map<String, String> checkItemNames = new HashMap<>();
+            checkItemNames.put("checkGroupName", checkGroup.getName());
             for (CheckItem checkItem : checkItems) {
                 checkItemNames.put(checkItem.getName(), "");
             }
-            checkNames.put(checkGroup.getName(), checkItemNames);
+            checkReportNames.add(checkItemNames);
         }
-        return new Result(true, checkNames);
+        return new Result(true, checkReportNames);
     }
 
     /**
@@ -127,7 +128,7 @@ public class OrderController {
      */
     @RequestMapping("findCheckReportByOrderId/{orderId}")
     public Result findCheckReportByOrderId(@PathVariable Integer orderId) {
-        Map<String, Map<String, String>> checkReport = orderService.findCheckReportByOrderId(orderId);
+        List<Map<String, String>> checkReport = orderService.findCheckReportByOrderId(orderId);
         if (checkReport != null && checkReport.size() > 0) {
             return new Result(true, checkReport);
         }
@@ -138,8 +139,8 @@ public class OrderController {
      * <p>根据orderId更新检查报告</p>
      */
     @RequestMapping("updateCheckReport/{orderId}")
-    public Result updateCheckReport(@PathVariable Integer orderId, @RequestBody Map<String, Map<String, String>> checkReport) {
-        return new Result(true, orderService.updateCheckReport(orderId, checkReport));
+    public Result updateCheckReport(@PathVariable Integer orderId, @RequestBody List<Map<String, String>> checkReport) {
+        return new Result(true, "体检报告更新成功", orderService.updateCheckReport(orderId, checkReport));
     }
 
 }

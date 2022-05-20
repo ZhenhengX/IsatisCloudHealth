@@ -81,6 +81,6 @@ public interface OrderFeign {
      * 根据orderId查询检查报告
      */
     @GetMapping("findCheckReportByOrderId/{orderId}")
-    Map<String, Map<String, String>> findCheckReportByOrderId(@PathVariable("orderId") Integer orderId);
+    List<Map<String, String>> findCheckReportByOrderId(@PathVariable("orderId") Integer orderId);
 
 }

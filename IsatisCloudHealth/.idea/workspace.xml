@@ -81,13 +81,13 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/SQL 方言" value="MySQL" />
     <property name="jdk.selected.JAVA_MODULE" value="17" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/WeChat/src/main/resources" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/view/src/main/resources/static/img" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.standard" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.standard" value="" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="项目" />
+    <property name="project.structure.last.edited" value="模块" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
@@ -96,11 +96,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\view\src\main\resources\static\img" />
+      <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\view\src\main\resources\static\plugins\echarts" />
+      <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\view\src\main\resources\static\js" />
       <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\WeChat\src\main\resources" />
       <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\WeChat\src\main\java\com\xzh\wechat" />
-      <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\WeChat\src\main\resources\static" />
-      <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\view\src\main\resources\static\img" />
-      <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\view\src\main\resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\86155\IdeaProjects\IsatisCloudHealth\Service\src\main\resources\com\xzh\service" />
@@ -194,11 +194,11 @@
     </configuration>
     <list>
       <item itemvalue="JUnit.ViewApplicationTests.contextLoads" />
+      <item itemvalue="JUnit.ServiceApplicationTests.contextLoads" />
       <item itemvalue="Spring Boot.ViewApplication" />
       <item itemvalue="Spring Boot.ServiceApplication" />
       <item itemvalue="Spring Boot.WeChatApplication" />
       <item itemvalue="应用程序.MD5Utils" />
-      <item itemvalue="JUnit.ServiceApplicationTests.contextLoads" />
     </list>
     <recent_temporary>
       <list>
@@ -279,6 +279,8 @@
       <workItem from="1652705100456" duration="1041000" />
       <workItem from="1652762986647" duration="25839000" />
       <workItem from="1652856130641" duration="19540000" />
+      <workItem from="1652942633324" duration="2000" />
+      <workItem from="1652942736497" duration="59893000" />
     </task>
     <servers />
   </component>

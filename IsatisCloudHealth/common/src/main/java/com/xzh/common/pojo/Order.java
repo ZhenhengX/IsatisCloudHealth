@@ -10,6 +10,7 @@ import org.apache.ibatis.type.JdbcType;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,12 +49,14 @@ public class Order implements Serializable {
     private String suggestion;//健康管理师建议
     private Integer address_id;
     @TableField(typeHandler = FastjsonTypeHandler.class)
-    private Map<String, Map<String, String>> checkReport;
+    private List<Map<String, String>> checkReport;
 
     @TableField(exist = false)
     private Member member;
     @TableField(exist = false)
     private Setmeal setmeal;
+    @TableField(exist = false)
+    private String setmealName;
 
     public Order() {
     }

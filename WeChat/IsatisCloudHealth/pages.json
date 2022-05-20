@@ -71,6 +71,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/checkRecord/checkReport/checkReport",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "报告详情",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
     "globalStyle": {
         "navigationBarTextStyle": "black",
