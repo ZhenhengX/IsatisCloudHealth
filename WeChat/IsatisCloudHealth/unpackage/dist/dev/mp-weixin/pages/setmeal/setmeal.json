@@ -1,6 +1,5 @@
 {
   "navigationBarTitleText": "体检预约",
-  "enablePullDownRefresh": false,
   "usingComponents": {
     "uni-section": "/components/uni-section/uni-section",
     "uni-card": "/uni_modules/uni-card/components/uni-card/uni-card"

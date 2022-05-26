@@ -2,6 +2,7 @@
     <view>
         <uni-section>
             <uni-card :isFull="true" :title="setmeal.name" :sub-title="setmeal.remark" :cover="'https://isatis.oss-cn-beijing.aliyuncs.com/' + setmeal.img">
+                <text class="price" :inverted="true">{{ setmeal.price }}元</text>
                 <text class="keyword">{{ setmeal.sex == '0' ? '性别不限' : setmeal.sex == '1' ? '男' : '女' }}</text>
                 <text class="keyword">{{ setmeal.age }}</text>
             </uni-card>
@@ -19,7 +20,7 @@
                                 <view v-for="(checkItem, index) in checkGroup.checkItems" :key="index">
                                     <text class="tag">
                                         {{ checkItem.name }}
-                                        <br/>
+                                        <br />
                                     </text>
                                 </view>
                             </uni-td>
@@ -54,6 +55,13 @@ export default {
 </script>
 
 <style>
+.price {
+    padding: 2px 8px;
+    color: #00aaff;
+    margin-right: 3.3%;
+    border: 1px solid #55aaff;
+    border-radius: 2px;
+}
 .keyword {
     padding: 2px 8px;
     color: #ea5504;

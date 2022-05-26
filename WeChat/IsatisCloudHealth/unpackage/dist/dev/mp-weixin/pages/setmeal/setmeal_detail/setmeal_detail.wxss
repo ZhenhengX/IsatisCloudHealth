@@ -1,4 +1,11 @@
 
+.price {
+    padding: 2px 8px;
+    color: #00aaff;
+    margin-right: 3.3%;
+    border: 1px solid #55aaff;
+    border-radius: 2px;
+}
 .keyword {
     padding: 2px 8px;
     color: #ea5504;

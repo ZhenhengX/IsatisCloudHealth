@@ -6,10 +6,10 @@
             </swiper>
         </uni-card>
         <uni-section class="section">
-            <navigator url="../setmeal/setmeal"><uni-card title="体检预约" subTitle="实时预约" thumbnail="/static/logo.png" :isShadow="true" /></navigator>
-            <navigator url="../orderList/orderList"><uni-card title="预约记录" subTitle="时间回溯" thumbnail="/static/logo.png" :isShadow="true" /></navigator>
-            <navigator url="../checkRecord/checkRecord"><uni-card title="报告查询" subTitle="一键查询" thumbnail="/static/logo.png" :isShadow="true" /></navigator>
-            <navigator url="../improve/improve"><uni-card title="改善方案" subTitle="健康建议" thumbnail="/static/logo.png" :isShadow="true" /></navigator>
+            <navigator url="../setmeal/setmeal"><uni-card title="体检预约" thumbnail="/static/logo.png" :isShadow="true" /></navigator>
+            <navigator url="../orderList/orderList"><uni-card title="预约记录" thumbnail="/static/logo.png" :isShadow="true" /></navigator>
+            <navigator url="../checkRecord/checkRecord"><uni-card title="报告查询" thumbnail="/static/logo.png" :isShadow="true" /></navigator>
+            <navigator url="../improve/improve"><uni-card title="改善方案" thumbnail="/static/logo.png" :isShadow="true" /></navigator>
         </uni-section>
     </view>
 </template>
@@ -18,7 +18,7 @@
 export default {
     data() {
         return {
-            swiper_image: ['../../static/c1.png', '../../static/c2.png', '../../static/c3.png']
+            swiper_image: ['../../static/logo1.png', '../../static/logo2.png', '../../static/c3.png']
         };
     }
 };

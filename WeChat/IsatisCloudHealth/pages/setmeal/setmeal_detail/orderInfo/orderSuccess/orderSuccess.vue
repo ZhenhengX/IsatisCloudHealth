@@ -4,10 +4,10 @@
             <view style="margin: 0 auto; text-align: center"><icon type="success" size="120" /></view>
             <uni-card title="预约信息">
                 <uni-list :border="false">
-                    <uni-list-item :border="false" title="体检人" :rightText="this.orderInfo.member"></uni-list-item>
-                    <uni-list-item title="体检套餐" :note="this.orderInfo.setmeal"></uni-list-item>
-                    <uni-list-item title="体检日期" :rightText="this.orderInfo.orderDate"></uni-list-item>
-                    <uni-list-item title="预约类型" :rightText="this.orderInfo.orderType"></uni-list-item>
+                    <uni-list-item :border="false" title="体检人" :rightText="orderInfo.orderName"></uni-list-item>
+                    <uni-list-item title="联系方式" :rightText="orderInfo.telephone"></uni-list-item>
+                    <uni-list-item title="体检套餐" :note="orderInfo.setmealName"></uni-list-item>
+                    <uni-list-item title="体检日期" :rightText="orderInfo.orderDate"></uni-list-item>
                 </uni-list>
             </uni-card>
             <uni-card title="注意事项">
@@ -35,8 +35,9 @@ export default {
     },
     onLoad(urlPara) {
         let id = urlPara.orderId;
-        this.$axios.post('/order/findById/' + id).then(response => {
-            this.orderInfo = response.data.data;
+        this.$axios.get('/order/findAllById/' + id).then(response => {
+            this.orderInfo = response.data;
+            
         });
     }
 };

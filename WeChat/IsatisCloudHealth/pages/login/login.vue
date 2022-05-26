@@ -9,7 +9,7 @@
                 <wInput v-model="telAndPwd.passData" type="password" maxlength="11" placeholder="密码" isShowPass></wInput>
             </view>
             <wButton class="wbutton" text="登 录" :rotate="isRotate" @click="startLogin" />
-            <navigator url="register/register"><wButton class="reg_wbutton" text="注 册" /></navigator>
+            <navigator class="regButton" url="register/register"><wButton text="注 册" /></navigator>
         </view>
     </view>
 </template>

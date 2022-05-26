@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import App from './App'
 import axios from 'static/utils/https.js';
+import moment from 'moment'
+
+Vue.prototype.$moment = moment;
 
 Vue.prototype.$axios = axios;
 

@@ -1,14 +1,19 @@
 {
     "pages": [
+        "pages/login/login",
+        "pages/login/register/register",
         "pages/index/index",
         "pages/setmeal/setmeal",
-        "pages/checkRecord/checkRecord",
-        "pages/improve/improve",
-        "pages/orderList/orderList",
-        "pages/myInfo/myInfo",
         "pages/setmeal/setmeal_detail/setmeal_detail",
         "pages/setmeal/setmeal_detail/orderInfo/orderInfo",
-        "pages/setmeal/setmeal_detail/orderInfo/orderSuccess/orderSuccess"
+        "pages/setmeal/setmeal_detail/orderInfo/orderSuccess/orderSuccess",
+        "pages/orderList/orderList",
+        "pages/checkRecord/checkRecord",
+        "pages/improve/improve",
+        "pages/myInfo/myInfo",
+        "pages/improve/improvePlan/improvePlan",
+        "pages/checkRecord/checkReport/checkReport",
+        "pages/myInfo/changeMyInfo/changeMyInfo"
     ],
     "subPackages": [],
     "window": {
@@ -23,14 +28,14 @@
             {
                 "pagePath": "pages/index/index",
                 "text": "首页",
-                "iconPath": "static/c1.png",
-                "selectedIconPath": "static/c2.png"
+                "iconPath": "static/home.png",
+                "selectedIconPath": "static/hoem_select.png"
             },
             {
                 "pagePath": "pages/myInfo/myInfo",
                 "text": "我的",
-                "iconPath": "./static/c9.png",
-                "selectedIconPath": "./static/c8.png"
+                "iconPath": "./static/user.png",
+                "selectedIconPath": "./static/user_select.png"
             }
         ]
     },

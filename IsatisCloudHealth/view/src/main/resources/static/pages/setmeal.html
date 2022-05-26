@@ -381,7 +381,7 @@
             },
             //文件上传成功后的钩子，response为服务端返回的值，file为当前上传的文件封装成的js对象
             handleAvatarSuccess(response, file) { //http 200
-                this.imageUrl = "http://qh1sg4xnd.hn-bkt.clouddn.com//" + response.data;
+                this.imageUrl = "https://isatis.oss-cn-beijing.aliyuncs.com/" + response.data;
                 this.$message({
                     type: response.flag ? 'success' : 'error',
                     message: response.message
@@ -489,7 +489,7 @@
                 this.tempImgId = row.img;
                 //进行图片的回显
                 if (row.img != null && row.img.length > 0) {
-                    this.imageUrl = "http://qh1sg4xnd.hn-bkt.clouddn.com//" + row.img;
+                    this.imageUrl = "https://isatis.oss-cn-beijing.aliyuncs.com/" + row.img;
                 }
                 //基于深拷贝的数据回显
                 this.formData = this.deepClone(row);

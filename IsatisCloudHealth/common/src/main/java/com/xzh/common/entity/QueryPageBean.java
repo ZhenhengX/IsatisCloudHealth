@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 封装查询条件
+ * 封装带条件的分页查询
  */
 @Data
 public class QueryPageBean implements Serializable {

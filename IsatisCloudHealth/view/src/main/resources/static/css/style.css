@@ -36,7 +36,7 @@ a {
 
 .skin-purple .main-header .navbar {
     height: 70px;
-    background: linear-gradient(to right, #a0cfff, #409EFF);
+    background: #3867c3;
     /* margin-left: 230px; */
 }
 
@@ -509,9 +509,9 @@ label input[type="radio"]:checked {
     margin-right: 5px;
 }
 
-.el-main {
-    background: #ecf0f5;
-}
+/*.el-main {*/
+/*    background: #ecf0f5;*/
+/*}*/
 
 .el-menu {
     border: 0 none;

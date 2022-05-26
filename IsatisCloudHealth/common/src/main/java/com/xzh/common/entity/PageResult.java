@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 分页结果封装对象
+ * 封装分页查询结果
  */
 @Data
 public class PageResult implements Serializable {

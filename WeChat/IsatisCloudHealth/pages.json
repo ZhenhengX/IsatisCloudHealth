@@ -58,8 +58,7 @@
         }, {
             "path": "pages/myInfo/myInfo",
             "style": {
-                "navigationBarTitleText": "我的",
-                "enablePullDownRefresh": false
+                "navigationBarTitleText": "我的"
             }
         }
         ,{
@@ -80,6 +79,14 @@
             }
             
         }
+        ,{
+            "path" : "pages/myInfo/changeMyInfo/changeMyInfo",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "个人信息"
+            }
+            
+        }
     ],
     "globalStyle": {
         "navigationBarTextStyle": "black",
@@ -95,14 +102,14 @@
         "list": [{
                 "pagePath": "pages/index/index",
                 "text": "首页",
-                "iconPath": "static/c1.png",
-                "selectedIconPath": "static/c2.png"
+                "iconPath": "static/home.png",
+                "selectedIconPath": "static/hoem_select.png"
             },
             {
                 "pagePath": "pages/myInfo/myInfo",
                 "text": "我的",
-                "iconPath": "./static/c9.png",
-                "selectedIconPath": "./static/c8.png"
+                "iconPath": "./static/user.png",
+                "selectedIconPath": "./static/user_select.png"
             }
         ]
     }

@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <title>菘蓝云健康</title>
+    <link rel="icon" href="./img/tabLogo.png" sizes="32x32">
     <meta content="菘蓝云健康" name="description">
     <meta content="菘蓝云健康" name="keywords">
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
@@ -16,31 +17,19 @@
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
 <body class="hold-transition skin-purple sidebar-mini">
-<div id="app">
-    <div class="login-container">
-        <div class="loginBox">
-            <form action="/login.do" class="login-form" label-position="left" method="post">
-                <div class="title-container">
-                    <div class="logoInfo clearfix">
-                        <em class="logo"></em>
-                    </div>
-                </div>
-                <div>
-                    <span class="svg-container svg-container_login">
-                        <span class="user"></span>
-                    </span>
-                    <input name="username" placeholder="请输入用户名" type="text"/>
-                </div>
-                <div>
-                        <span class="svg-container">
-                          <span class="username"></span>
-                        </span>
-                    <input name="password" placeholder="请输入密码" type="password"/>
-                </div>
-                <input style="width:100%;margin-bottom:30px;" type="submit" value="登录"/>
-            </form>
+<div class="login-box">
+    <h2>菘 蓝 云</h2>
+    <form action="/login.do" class="login-form" label-position="left" method="post">>
+        <div class="login-field">
+            <input name="username" placeholder="请输入用户名" type="text"/>
+            <label>用户名</label>
         </div>
-    </div>
+        <div class="login-field">
+            <input name="password" placeholder="请输入密码" type="password"/>
+            <label>密 码</label>
+        </div>
+        <button type="submit">登录</button>
+    </form>
 </div>
 </body>
 </html>

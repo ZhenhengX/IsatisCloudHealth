@@ -40,6 +40,7 @@ public interface OrderDao extends BaseMapper<Order> {
             "                and setmeal_id = #{setmealId}" +
             "            </if>" +
             "        </where>" +
+            "        order by orderDate DESC" +
             "</script>")
     List<Order> findByCondition(Order order);
 
@@ -190,6 +191,7 @@ public interface OrderDao extends BaseMapper<Order> {
             "        <if test=\"queryOrderStatus != null\">" +
             "            and o.orderStatus = #{queryOrderStatus}" +
             "        </if>" +
+            "        order by orderDate DESC" +
             "</script>")
     Page<Order> findByPageAndCondition(@Param("queryString") String queryString, @Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("queryOrderStatus") String queryOrderStatus, @Param("queryOrderType") String queryOrderType);
 
