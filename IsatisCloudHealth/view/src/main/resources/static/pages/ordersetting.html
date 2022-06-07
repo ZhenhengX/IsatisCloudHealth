@@ -9,15 +9,15 @@
     <meta content="菘蓝云健康" name="keywords">
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
     <!-- 引入样式 -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../plugins/element-ui/lib/theme-chalk/index.css">
     <link href="../plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/orderset.css" rel="stylesheet">
     <!-- 引入组件库 -->
-    <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="../plugins/vue/dist/vue.js"></script>
+    <script src="../plugins/element-ui/lib/index.js"></script>
     <script src="../js/jquery.min.js" type="text/javascript"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="../plugins/axios/dist/axios.min.js"></script>
 </head>
 <body class="hold-transition">
 <div id="app">
@@ -32,23 +32,6 @@
     <div class="app-container">
         <div class="box">
             <div class="box ordersetting">
-                <el-card class="box-card">
-                    <div class="boxMain">
-                        <el-button style="margin-bottom: 20px;margin-right: 20px" type="primary"
-                                   @click="downloadTemplate()">模板下载
-                        </el-button>
-                        <el-upload :before-upload="beforeUpload"
-                                   :on-success="handleSuccess"
-                                   :show-file-list="false"
-                                   action="/ordersetting/upload"
-                                   name="excelFile">
-                            <el-button type="primary">上传文件</el-button>
-                        </el-upload>
-                    </div>
-                    <div>
-                        操作说明：请点击"模板下载"按钮获取模板文件，在模板文件中录入预约设置数据后点击"上传文件"按钮上传模板文件。
-                    </div>
-                </el-card>
                 <div class="calendar">
                     <!-- 年份 月份 -->
                     <div class="month">
@@ -123,8 +106,8 @@
 </div>
 </body>
 <!-- 引入组件库 -->
-<script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="../plugins/vue/dist/vue.js"></script>
+<script src="../plugins/element-ui/lib/index.js"></script>
 <script src="../js/jquery.min.js" type="text/javascript"></script>
 <script>
     new Vue({
@@ -174,35 +157,6 @@
                         message: '取消输入'
                     });
                 });
-            },
-            //上传之前进行文件格式校验
-            beforeUpload(file) {
-                const isXLS = file.type === 'application/vnd.ms-excel';
-                if (isXLS) {
-                    return true;
-                }
-                const isXLSX = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-                if (isXLSX) {
-                    return true;
-                }
-                this.$message.error('上传文件只能是xls或者xlsx格式!');
-                return false;
-            },
-            //下载模板文件
-            downloadTemplate() {
-                window.location.href = "../template/ordersetting_template.xlsx";
-            },
-            //上传成功提示
-            handleSuccess(response, file) {
-                if (response.flag) {
-                    this.$message({
-                        message: response.message,
-                        type: 'success'
-                    });
-                } else {
-                    this.$message.error(response.message);
-                }
-                console.log(response, file, fileList);
             },
             //初始化当前页要展示的日期
             initData: function (cur) {
@@ -255,8 +209,12 @@
                     this.days.push(dayobject);
                 }
 
+                let month = this.currentMonth;
+                if (month.toString().length == 1) {
+                    month = '0' + month;
+                }
                 //发送ajax请求，根据当前页面对应的月份查询数据库，封装成相应结果赋值给leftobj模型数据，用于页面展示
-                axios.post("/ordersetting/getOrderSettingByMonth?date=" + this.currentYear + "-" + this.currentMonth).then((res) => {
+                axios.post("/ordersetting/getOrderSettingByMonth/" + this.currentYear + "-" + month).then((res) => {
                     if (res.data.flag) {
                         this.leftobj = res.data.data;
                     } else {

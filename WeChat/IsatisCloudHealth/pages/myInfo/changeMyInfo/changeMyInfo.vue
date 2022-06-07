@@ -39,12 +39,30 @@ export default {
     },
     methods: {
         changeMemberInfo() {
+            uni.showLoading({
+                title: '保存中'
+            });
             let months = this.$moment().diff(new Date(this.memberNew.birthday), 'months');
             this.memberNew.age = Math.floor(months / 12);
-            alert(this.memberNew.age);
-
-            // this.$axios.post('', this.memberNew).then(res => {});
-            // uni.setStorageSync('member', memberNew);
+            this.$axios
+                .post('/member/editMember', this.memberNew)
+                .then(res => {
+                    uni.removeStorageSync('member');
+                    this.memberNew = res.data.data;
+                    uni.setStorageSync('member', this.memberNew);
+                    uni.showToast({
+                        title: res.data.message,
+                        icon: 'success',
+                        duration: 1200
+                    });
+                })
+                .catch(err => {
+                    uni.hideLoading();
+                    uni.showToast({
+                        title: err.data.message,
+                        icon: 'error'
+                    });
+                });
         }
     }
 };

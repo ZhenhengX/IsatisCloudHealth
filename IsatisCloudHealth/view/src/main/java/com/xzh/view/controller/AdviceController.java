@@ -36,7 +36,6 @@ public class AdviceController {
     @RequestMapping("/add") //[a1,a2]  [b1,b2]
     public Result add(String suggestion, String[] foodIds, String[] sportIds, Integer orderId) {
         try {
-            System.out.println(orderId);
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             //获取登录的用户名 进一步获取到用户的角色信息(管理师)
             if (user != null) {

@@ -38,7 +38,13 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 logging:
   level:
-    com.xzh.service: debug
+    root: error
+#    com.xzh.service: debug
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: countSql
 feign:
   client:
     config:

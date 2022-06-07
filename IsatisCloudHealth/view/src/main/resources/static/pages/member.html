@@ -9,7 +9,7 @@
     <meta content="菘蓝云健康" name="keywords">
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
     <!-- 引入样式 -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../plugins/element-ui/lib/theme-chalk/index.css">
     <link href="../plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
@@ -33,14 +33,10 @@
                 <el-button class="dalfBut" @click="handleCurrentChange(1)">查询</el-button>
                 <el-button class="butT" type="primary" @click="handleCreate()">新建</el-button>
             </div>
-            <el-row>
-                <el-button @click="exportExcel()">批量导出Excel</el-button>
-            </el-row>
             <el-table ref="multipleTable" :data="dataList" style="width: 100%" tooltip-effect="dark"
                       @selection-change="handleSelectionChange">
 
                 <el-table-column prop="id" type="selection" width="55"></el-table-column>
-                </el-table-column>
                 <el-table-column align="center" label="档案号" prop="fileNumber"></el-table-column>
                 <el-table-column align="center" label="姓名" prop="name"></el-table-column>
                 <el-table-column align="center" label="性别">
@@ -92,7 +88,7 @@
                             <el-col :span="12">
                                 <el-form-item label="性别">
                                     <el-select v-model="formData.sex">
-                                        <el-option label="不限" value="0"></el-option>
+                                        <el-option label="保密" value="0"></el-option>
                                         <el-option label="男" value="1"></el-option>
                                         <el-option label="女" value="2"></el-option>
                                     </el-select>
@@ -232,10 +228,10 @@
 </div>
 </body>
 <!-- 引入组件库 -->
-<script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="../plugins/vue/dist/vue.js"></script>
+<script src="../plugins/element-ui/lib/index.js"></script>
 <script src="../js/jquery.min.js" type="text/javascript"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="../plugins/axios/dist/axios.min.js"></script>
 <script src="../js/healthmobile.js"></script>
 
 
@@ -346,7 +342,6 @@
 //====================================================================================//
             //添加
             handleAdd() {
-                /*console.log(this.formData);*/
                 //在进行添加的时候先对，表单进行校验，防止因为不填写数据，直接保存的空数据
                 this.$refs['dataAddForm'].validate((valid) => {
                     if (valid) {
@@ -356,10 +351,6 @@
                         axios.post("/member/addMember", this.formData).then((res) => {
                             if (res.data.flag) {
                                 this.findPage();
-                                /*this.$message({
-                                    message: res.data.message,
-                                    type: 'success'
-                                })*/
                                 this.$message.success(res.data.message)
                             } else {//执行失败
                                 this.$message.error(res.data.message);
@@ -398,7 +389,6 @@
                         if (member.phoneNumber != null) {
                             member.phoneNumber = member.phoneNumber.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
                         }
-                        // console.log(member.phoneNumber);
                     }
 
 
@@ -542,22 +532,14 @@
                 function compare2Objects(x, y) {
                     var p;
 
-                    // remember that NaN === NaN returns false
-                    // and isNaN(undefined) returns true
                     if (isNaN(x) && isNaN(y) && typeof x === 'number' && typeof y === 'number') {
                         return true;
                     }
 
-                    // Compare primitives and functions.
-                    // Check if both arguments link to the same object.
-                    // Especially useful on the step where we compare prototypes
                     if (x === y) {
                         return true;
                     }
 
-                    // Works in case when functions are created in constructor.
-                    // Comparing dates is a common scenario. Another built-ins?
-                    // We can even handle functions passed across iframes
                     if ((typeof x === 'function' && typeof y === 'function') ||
                         (x instanceof Date && y instanceof Date) ||
                         (x instanceof RegExp && y instanceof RegExp) ||
@@ -583,13 +565,10 @@
                         return false;
                     }
 
-                    // Check for infinitive linking loops
                     if (leftChain.indexOf(x) > -1 || rightChain.indexOf(y) > -1) {
                         return false;
                     }
 
-                    // Quick checking of one object being a subset of another.
-                    // todo: cache the structure of arguments[0] for performance
                     for (p in y) {
                         if (y.hasOwnProperty(p) !== x.hasOwnProperty(p)) {
                             return false;
@@ -632,13 +611,12 @@
                 }
 
                 if (arguments.length < 1) {
-                    return true; //Die silently? Don't know how to handle such case, please help...
-                    // throw "Need two or more arguments to compare";
+                    return true;
                 }
 
                 for (i = 1, l = arguments.length; i < l; i++) {
 
-                    leftChain = []; //Todo: this can be cached
+                    leftChain = [];
                     rightChain = [];
 
                     if (!compare2Objects(arguments[0], arguments[i])) {

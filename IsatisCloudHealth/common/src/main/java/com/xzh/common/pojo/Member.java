@@ -30,7 +30,7 @@ public class Member implements Serializable {
     private Date regTime;//注册时间
     private String password;//登录密码
     private String email;//邮箱
-    @TableField(value = "regTime", jdbcType = JdbcType.DATE)
+    @TableField(jdbcType = JdbcType.DATE)
     private Date birthday;//出生日期
     private String remark;//备注
     private String healthmanager;//健康管理师

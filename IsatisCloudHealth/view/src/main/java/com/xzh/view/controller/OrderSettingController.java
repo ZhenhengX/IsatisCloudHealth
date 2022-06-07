@@ -7,10 +7,7 @@ import com.xzh.common.utils.POIUtils;
 import com.xzh.view.openFeign.OrderSettingFeign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -38,7 +35,6 @@ public class OrderSettingController {
                 String data = row[0];
                 //获取最大预约人数
                 String number = row[1];
-                System.out.println(data + "------" + number);
                 //将日期和人数封装到OrderSetting对象中
                 OrderSetting orderSetting = new OrderSetting(new Date(data), Integer.parseInt(number));
                 //将对象存入集合
@@ -54,8 +50,8 @@ public class OrderSettingController {
     }
 
     //根据月份查询预约数据
-    @RequestMapping("/getOrderSettingByMonth")
-    public Result getOrderSettingByMonth(String date) {
+    @RequestMapping("/getOrderSettingByMonth/{date}")
+    public Result getOrderSettingByMonth(@PathVariable String date) {
         try {
             List<Map> data = orderSettingService.getOrderSettingByMonth(date);
             return new Result(true, MessageConstant.GET_ORDERSETTING_SUCCESS, data);

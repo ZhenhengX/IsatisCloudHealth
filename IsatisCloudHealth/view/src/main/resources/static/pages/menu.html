@@ -9,7 +9,7 @@
     <meta content="菘蓝云健康" name="keywords">
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
     <!-- 引入样式 -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../plugins/element-ui/lib/theme-chalk/index.css">
     <link href="../plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
     <style>
@@ -167,24 +167,24 @@
                             <el-row>
                                 <el-col :span="12">
                                     <el-form-item label="菜单名称">
-                                        <el-input v-model="editFormData.name"/>
+                                        <el-input v-model="editFormData.name"></el-input>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="12">
                                     <el-form-item label="访问路径" prop="linkUrl">
-                                        <el-input v-model="editFormData.linkUrl"/>
+                                        <el-input v-model="editFormData.linkUrl"></el-input>
                                     </el-form-item>
                                 </el-col>
                             </el-row>
                             <el-row>
                                 <el-col :span="12">
                                     <el-form-item label="路径级别" prop="path">
-                                        <el-input v-model="editFormData.path"/>
+                                        <el-input v-model="editFormData.path"></el-input>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="12">
                                     <el-form-item label="优先级" prop="priority">
-                                        <el-input v-model="editFormData.priority"/>
+                                        <el-input v-model="editFormData.priority"></el-input>
                                     </el-form-item>
                                 </el-col>
                             </el-row>
@@ -204,7 +204,7 @@
                             <el-row>
                                 <el-col :span="12">
                                     <el-form-item label="菜单级别" prop="level">
-                                        <el-input v-model="editFormData.level"/>
+                                        <el-input v-model="editFormData.level"></el-input>
                                     </el-form-item>
                                 </el-col>
                             </el-row>
@@ -237,13 +237,13 @@
 </div>
 </body>
 <!-- 引入组件库 -->
-<script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+<script src="../plugins/vue/dist/vue.js"></script>
 <!-- 引入样式 -->
-<link href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" rel="stylesheet">
+<link href="../plugins/element-ui/lib/theme-chalk/index.css" rel="stylesheet">
 <!-- 引入组件库 -->
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="../plugins/element-ui/lib/index.js"></script>
 <script src="../js/jquery.min.js" type="text/javascript"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="../plugins/axios/dist/axios.min.js"></script>
 
 <script>
     var vue = new Vue({
@@ -266,10 +266,10 @@
             dialogFormVisible4Edit: false,//编辑表单是否可见
             rules: {//校验规则
                 name: [{required: true, message: '菜单名称为必填项', trigger: 'blur'}],
-                linkUrl: [{required: false, message: '访问路径为必填项', trigger: 'blur'}],
+                linkUrl: [{required: false, trigger: 'blur'}],
                 path: [{required: true, message: '路径级别为必填项', trigger: 'blur'}],
                 priority: [{required: true, message: '优先级为必填项', trigger: 'blur'}],
-                parentMenuId: [{required: false, message: '上级菜单为必填项', trigger: 'blur'}],
+                parentMenuId: [{required: false, trigger: 'blur'}],
                 level: [{required: true, message: '菜单级别为必填项', trigger: 'blur'}],
             },
             openEdit: false,//一个标志变量,标记为是否打开编辑表单
@@ -300,6 +300,11 @@
                     //获取服务器响应的数据，封装了 总条数，数据的集合
                     this.pagination.total = res.data.total;
                     this.dataList = res.data.rows;
+                    for (let menu of this.dataList) {
+                        if (menu.linkUrl == 'null.html') {
+                            menu.linkUrl = '';
+                        }
+                    }
                 })
             },
             // 重置表单
@@ -379,6 +384,9 @@
                     this.$message("数据没有改变");
                     return;
                 }
+                if (this.editFormData.linkUrl == null || this.editFormData.linkUrl == '') {
+                    this.editFormData.linkUrl = 'null.html';
+                }
                 //表单校验
                 //注意：注意：ajax都是异步操作，所以findPage方法要放finally里面
                 this.$refs['dataAddForm'].validate((valid) => {
@@ -446,18 +454,6 @@
 
             //深拷贝
             deepClone(obj) {
-                /*  let target = {};
-                for (let key in obj) {
-                    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-                        if (typeof obj[key] === 'object') {
-                            target[key] = this.deepClone(obj[key]);
-                        } else {
-                                target[key] = obj[key];
-                        }
-                    }
-                }
-                return target;
-*/
                 if (obj === null) return null;
                 if (typeof obj != 'object') return obj;
                 if (obj.constructor === Date) return new Date(obj);
@@ -469,12 +465,6 @@
                     }
                 }
                 return target;
-                /* return JSON.parse(JSON.stringify(obj));*/
-                //这样的意思是，将obj进行序列化，保存到磁盘上，ran后通过反序列化，再获取到该对象，该对象将是个新对象，并不会影响到原来的
-                // 这样写也是有问题的，
-                // 1.如果有时间对象，时间对象会被转换成一个字符串
-                //2.如果有正则表达式，或者error对象，序列化会为空
-                //3.如果对象中有循环引用无法实现正常拷贝
             },
             //切换页码
             handleCurrentChange(currentPage) {
@@ -501,22 +491,14 @@
                 function compare2Objects(x, y) {
                     var p;
 
-                    // remember that NaN === NaN returns false
-                    // and isNaN(undefined) returns true
                     if (isNaN(x) && isNaN(y) && typeof x === 'number' && typeof y === 'number') {
                         return true;
                     }
 
-                    // Compare primitives and functions.
-                    // Check if both arguments link to the same object.
-                    // Especially useful on the step where we compare prototypes
                     if (x === y) {
                         return true;
                     }
 
-                    // Works in case when functions are created in constructor.
-                    // Comparing dates is a common scenario. Another built-ins?
-                    // We can even handle functions passed across iframes
                     if ((typeof x === 'function' && typeof y === 'function') ||
                         (x instanceof Date && y instanceof Date) ||
                         (x instanceof RegExp && y instanceof RegExp) ||
@@ -525,7 +507,6 @@
                         return x.toString() === y.toString();
                     }
 
-                    // At last checking prototypes as good as we can
                     if (!(x instanceof Object && y instanceof Object)) {
                         return false;
                     }
@@ -542,13 +523,10 @@
                         return false;
                     }
 
-                    // Check for infinitive linking loops
                     if (leftChain.indexOf(x) > -1 || rightChain.indexOf(y) > -1) {
                         return false;
                     }
 
-                    // Quick checking of one object being a subset of another.
-                    // todo: cache the structure of arguments[0] for performance
                     for (p in y) {
                         if (y.hasOwnProperty(p) !== x.hasOwnProperty(p)) {
                             return false;
@@ -591,8 +569,7 @@
                 }
 
                 if (arguments.length < 1) {
-                    return true; //Die silently? Don't know how to handle such case, please help...
-                    // throw "Need two or more arguments to compare";
+                    return true;
                 }
 
                 for (i = 1, l = arguments.length; i < l; i++) {

@@ -25,6 +25,9 @@ public class SetMealController {
     @Autowired
     private AssociationFeign associationFeign;
 
+    /**
+     * <p>获取全部套餐</p>
+     */
     @RequestMapping("/getSetmeal")
     public Result getSetmeal() {
         try {
@@ -37,10 +40,7 @@ public class SetMealController {
     }
 
     /**
-     * 返回套餐详情和手机号用于回显
-     *
-     * @param id      套餐id
-     * @param request 用于获取存储在session中的member对象
+     * <p>根据套餐id获取套餐的详细信息</p>
      */
     @RequestMapping("/findById")
     public Result findById(Integer id, HttpServletRequest request) {

@@ -60,7 +60,6 @@ public class MemberController {
      */
     @RequestMapping("/addMember")
     public Result addMember(@RequestBody Member member) {
-        System.out.println(member);
         //调用添加
         try {
             Date regTime = DateUtils.getToday();
@@ -122,7 +121,6 @@ public class MemberController {
     public Result exportBusinessReport(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         List<Member> members = (List<Member>) session.getAttribute("member");
-        System.out.println(members);
 
         //表格行的计数
         int eEell = 1;

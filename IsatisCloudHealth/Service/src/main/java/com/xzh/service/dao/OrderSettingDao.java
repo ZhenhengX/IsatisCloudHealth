@@ -22,7 +22,7 @@ public interface OrderSettingDao extends BaseMapper<OrderSetting> {
     void updateByDate(OrderSetting orderSetting);
 
     //根据月份查询预约数据
-    @Select("SELECT * FROM h_order_setting WHERE orderDate BETWEEN #{begain,jdbcType=DATE} AND #{end,jdbcType=DATE}")
+    @Select("SELECT * FROM h_order_setting WHERE date_format(orderDate,'%Y-%m') = #{date}")
     List<OrderSetting> getOrderSettingByMonth(Map<String, String> map);
 
     //根据日期查询预约设置

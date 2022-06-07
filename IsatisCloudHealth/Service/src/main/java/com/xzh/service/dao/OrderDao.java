@@ -197,19 +197,17 @@ public interface OrderDao extends BaseMapper<Order> {
 
     //编辑操作，先查询点击对象的id
     @Select("SELECT" +
-            "        m.`name` memberName," +
-            "        m.`phoneNumber` ," +
+            "        o.`order_name` memberName," +
+            "        o.`telephone` phoneNumber," +
             "        o.`orderDate`," +
             "        o.`id`," +
             "        o.`orderType`," +
             "        o.`orderStatus`," +
             "        s.`name` setmealName" +
             "        FROM" +
-            "        h_member m , h_order o , h_setmeal s" +
+            "        h_order o , h_setmeal s" +
             "        WHERE" +
             "        o.`setmeal_id` = s.`id`" +
-            "        AND" +
-            "        m.`id`=o.`member_id`" +
             "        AND" +
             "        o.`id` = #{o.id}")
     Map findOrderById1(Integer id);

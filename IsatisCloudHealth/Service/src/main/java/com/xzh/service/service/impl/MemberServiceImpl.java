@@ -147,15 +147,12 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, Member> implements
         memberDao.insert(member);
     }
 
-    //编辑修改会员信息
+    // 编辑修改会员信息
     @Override
     public Member findMemberById(Integer memberId) {
         return memberDao.selectById(memberId);
     }
 
-    /**
-     * 此方法与前端公用  注意!!!!!!!!!!!!!
-     */
     @Override
     public void editMember(Member member) {
         //修改会员表里的内容

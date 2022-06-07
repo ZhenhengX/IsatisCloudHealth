@@ -9,14 +9,14 @@
     <meta content="菘蓝云健康" name="keywords">
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
     <!-- 引入样式 -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../plugins/element-ui/lib/theme-chalk/index.css">
     <link href="../plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
     <!-- 引入组件库 -->
-    <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="../plugins/vue/dist/vue.js"></script>
+    <script src="../plugins/element-ui/lib/index.js"></script>
     <script src="../js/jquery.min.js" type="text/javascript"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="../plugins/axios/dist/axios.min.js"></script>
     <style type="text/css">
         .el-main {
             position: absolute;
@@ -34,9 +34,12 @@
         <el-header class="main-header" style="height:70px;">
             <nav class="navbar navbar-static-top">
                 <!-- Logo -->
-                <a class="logo" href="#" style="text-align:center">
-                    <span class="logo-lg"><img src="../img/loginLogo.png"></span>
-                </a>
+                <div class="logo" style="text-align:center">
+                    <span class="logo-lg">
+                        <img src="../img/loginLogo.png">
+                    </span>
+                </div>
+
                 <div class="right-menu">
                     <el-dropdown class="avatar-container right-menu-item" trigger="click">
                         <div class="avatar-wrapper">
@@ -81,7 +84,7 @@
                 </el-menu>
             </el-aside>
             <el-container>
-                <iframe class="el-main" width="1319px" height="100%"  frameborder="0"
+                <iframe class="el-main" width="1319px" height="100%" frameborder="0"
                         :src="menuList[0].children[0].linkUrl" name="right"></iframe>
             </el-container>
         </el-container>
@@ -191,7 +194,7 @@
 
             //退出操作
             logout() {
-                axios.post("/user/quit").then((res) => {
+                axios.post("/user/quit").then(res => {
                     window.location.href = "/login.html";
                 })
             },

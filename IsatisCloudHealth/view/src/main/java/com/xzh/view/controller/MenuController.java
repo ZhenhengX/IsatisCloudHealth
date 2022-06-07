@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/menu")
@@ -45,9 +46,11 @@ public class MenuController {
     //添加菜单
     @RequestMapping("/add")
     public Result add(@RequestBody Menu menu) {
+        if (menu.getLinkUrl() == null || menu.getLinkUrl().length() == 0) {
+            menu.setLinkUrl("null.html");
+        }
         try {
-            if (menu == null && menu.getName() == null && menu.getPath() == null
-                    && menu.getPriority() == null && menu.getLevel() == null) {
+            if (menu.getPath() == null && menu.getPriority() == null && menu.getLevel() == null) {
                 return new Result(false, MessageConstant.ADD_MENU_FAIL);
             }
 
@@ -59,7 +62,10 @@ public class MenuController {
                 menuList = menuService.findByNameAndLkurl(menu.getName(), menu.getLinkUrl());
             }
             if (menuList != null && menuList.size() > 0) {
-                return new Result(false, MessageConstant.ADD_MENU_FAIL + ",菜单名称或请求路径重复");
+                if (!Objects.equals(menu.getLinkUrl(), "null.html")) {
+                    return new Result(false, MessageConstant.ADD_MENU_FAIL + "，菜单名称或请求路径重复");
+                }
+
             }
 
             //判断二级菜单 访问路径 路径级别 自关联id
@@ -69,7 +75,7 @@ public class MenuController {
             }
 
             //判断是一级菜单
-            if (menu.getLinkUrl() == null && menu.getParentMenuId() == null) {
+            if (Objects.equals(menu.getLinkUrl(), "null.html") && menu.getParentMenuId() == null) {
                 menuService.add(menu);
                 return new Result(true, MessageConstant.ADD_MENU_SUCCESS);
             }
@@ -84,17 +90,18 @@ public class MenuController {
     //编辑菜单
     @RequestMapping("/edit")
     public Result edit(@RequestBody Menu menu) {
+        if (menu.getLinkUrl() == null || menu.getLinkUrl().length() == 0) {
+            menu.setLinkUrl("null.html");
+        }
         try {
-            if (menu == null) {
                 if (menu.getName() == null && menu.getPath() == null
                         && menu.getPriority() == null && menu.getLevel() == null) {
                     return new Result(false, MessageConstant.EDIT_MENU_FAIL);
                 }
-            }
             //为true是二级路径格式正确
             boolean flag2 = (menu.getLinkUrl() != null && menu.getLinkUrl().length() > 0 && menu.getParentMenuId() != null);
             //为true是一级路径正确
-            boolean flag1 = (menu.getLinkUrl() == null || menu.getLinkUrl().equals("") && menu.getParentMenuId() == null);
+            boolean flag1 = (Objects.equals(menu.getLinkUrl(), "null.html") || menu.getLinkUrl().equals("") && menu.getParentMenuId() == null);
 
             if (flag1 || flag2) {
                 //通过id查找修改前的菜单
@@ -132,9 +139,13 @@ public class MenuController {
     }
 
     private Result oneFindByNameAndLkurl(Menu menu) {
+        if (Objects.equals(menu.getLinkUrl(), "null.html")) {
+            menuService.edit(menu);
+            return new Result(true, MessageConstant.EDIT_MENU_SUCCESS);
+        }
         List<Menu> list = menuService.findByNameAndLkurl(menu.getName(), menu.getLinkUrl());
         if (list != null && list.size() >= 1) {//如果集合数量大于等于1，则存在其他相同的菜单
-            return new Result(false, MessageConstant.EDIT_MENU_FAIL + ",菜单或者请求路径重复");
+            return new Result(false, MessageConstant.EDIT_MENU_FAIL + "，菜单或者请求路径重复");
         } else {
             menuService.edit(menu);
             return new Result(true, MessageConstant.EDIT_MENU_SUCCESS);
@@ -142,9 +153,13 @@ public class MenuController {
     }
 
     private Result twoFindByNameAndLkurl(Menu menu) {
+        if (Objects.equals(menu.getLinkUrl(), "null.html")) {
+            menuService.edit(menu);
+            return new Result(true, MessageConstant.EDIT_MENU_SUCCESS);
+        }
         List<Menu> list = menuService.findByNameAndLkurl(menu.getName(), menu.getLinkUrl());
         if (list != null && list.size() > 1) {//如果集合数量大于1，则存在其他相同的菜单
-            return new Result(false, MessageConstant.EDIT_MENU_FAIL + ",菜单或者请求路径重复");
+            return new Result(false, MessageConstant.EDIT_MENU_FAIL + "，菜单或者请求路径重复");
         } else {
             menuService.edit(menu);
             return new Result(true, MessageConstant.EDIT_MENU_SUCCESS);

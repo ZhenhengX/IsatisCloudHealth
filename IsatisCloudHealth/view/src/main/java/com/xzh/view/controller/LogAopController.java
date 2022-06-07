@@ -35,16 +35,9 @@ public class LogAopController {
     private Date visitTime;//5开始时间
     private Class clazz;//6访问的类
     private Method method;//7访问的方法
-/*
-1如何获取操作者?
-     * 2如何获取访问的ip
-     * 3如何获取访问的url
-     * 4如何获取执行的时长
-*/
-
 
     //前置通知,主要获取开始时间,执行的类是哪一个,执行了哪个方法
-    @Before("execution(* com.xzh.view.controller.*.*(..))")//.*是包下的所有类 .*是类下的所有方法
+    @Before("execution(* com.xzh.view.controller.*.*(..))")//.*是包下的所有类 .*(..)是类下的所有方法
     public void doBefore(JoinPoint joinPoint) throws NoSuchMethodException, ClassNotFoundException {
         visitTime = new Date();//当前时间就是开始的时间
         clazz = joinPoint.getTarget().getClass();//获取类
@@ -102,7 +95,6 @@ public class LogAopController {
         syslog.setUsername(user.getUsername());//6
         syslog.setVisitTime(visitTime);//7
         syslog.setConsumerName("pighome");
-        System.out.println(syslog);
         service.saveLog(syslog);
     }
 }

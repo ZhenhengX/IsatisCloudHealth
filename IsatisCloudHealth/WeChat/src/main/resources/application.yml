@@ -19,7 +19,8 @@ spring:
       date: yyyy-MM-dd
 logging:
   level:
-    com.xzh: debug
+    root: error
+#    com.xzh: debug
 feign:
   client:
     config:

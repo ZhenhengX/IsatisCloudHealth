@@ -1,6 +1,5 @@
 package com.xzh.service.service.impl;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -291,34 +290,20 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, Order> implements Or
 
         orderSetting.setReservations(orderSetting.getReservations() + 1);//设置已预约人数+1
         orderSettingDao.editReservationsByOrderDate(orderSetting);
-
         return new Result(true, MessageConstant.ORDER_SUCCESS, order.getId());
     }
 
     //保存编辑后的数据
     public void edit(Integer setmealId, Map map) {
         //获取dataEditForm中各个字段的值
-        String name = (String) map.get("name");
-        String phoneNumber = (String) map.get("phoneNumber");
-        Member member = new Member();
-        member.setName(name);
-        member.setPhoneNumber(phoneNumber);
-        memberDao.update(member, Wrappers.lambdaQuery(Member.class).eq(Member::getPhoneNumber, phoneNumber));
-
-        //将编辑页面的字段值重新封装为一个对象
         Order order = new Order();
-        String orderDate = (String) map.get("orderDate");
+        order.setId((Integer) map.get("orderId"));
+        order.setOrderName((String) map.get("name"));
         try {
-            order.setOrderDate(DateUtils.parseString2Date(orderDate));
+            order.setOrderDate(DateUtils.parseString2Date((String) map.get("orderDate")));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String orderType = (String) map.get("orderType");
-        order.setOrderType(orderType);
-        String orderStatus = (String) map.get("orderStatus");
-        order.setOrderStatus(orderStatus);
-        Integer orderId = (Integer) map.get("orderId");
-        order.setId(orderId);
         order.setSetmealId(setmealId);
         //执行修改
         orderDao.updateById(order);

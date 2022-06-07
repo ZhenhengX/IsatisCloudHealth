@@ -84,7 +84,6 @@ public class ReportController {
     @RequestMapping("/getSetmealReport")
     public Result getSetmealReport() {
         try {
-            //使用模拟数据测试使用什么样的java对象转为饼形图所需的json数据格式
             Map<String, Object> data = new HashMap<>();
             List<Map<String, Object>> setmealCount = setmealService.findSetmealCount();
             data.put("setmealCount", setmealCount);

@@ -20,7 +20,8 @@ spring:
 
 logging:
   level:
-    com.xzh.view: debug
+    root: error
+#    com.xzh.view: debug
 feign:
   client:
     config:

@@ -39,12 +39,13 @@ public class OrderSettingServiceImpl extends ServiceImpl<OrderSettingDao, OrderS
     @Override
     public List<Map> getOrderSettingByMonth(String date) {
         //每月第一天
-        String begain = date + "-1";
-        //每月最后一天（假设每月都有31号）
-        String end = date + "-31";
+//        String begain = date + "-01";
+//        //每月最后一天（假设每月都有31号）
+//        String end = date + "-31";
         Map<String, String> map = new HashMap<>();
-        map.put("begain", begain);
-        map.put("end", end);
+//        map.put("begain", begain);
+//        map.put("end", end);
+        map.put("date", date);
         List<OrderSetting> orderSettings = orderSettingDao.getOrderSettingByMonth(map);
         List<Map> result = new ArrayList<>();
         if (orderSettings != null && orderSettings.size() > 0) {

@@ -100,7 +100,10 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealDao, Setmeal> impleme
     public void delete(Integer setMealId, String imgId) {
         if (setMealId != null) {
             // 删除OSS图片
-            AliyunOssUtils.delete(setmealDao.selectById(setMealId).getImg());
+            if (setmealDao.selectById(setMealId).getImg() != null) {
+                AliyunOssUtils.delete(setmealDao.selectById(setMealId).getImg());
+            }
+
             // 先删除关联关系
             setmealDao.deleteSetmealAndCheckgroup(setMealId);
             // 根据id删除套餐
